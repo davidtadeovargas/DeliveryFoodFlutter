@@ -6,8 +6,9 @@ import '../models/payment_method.dart';
 class PickUpMethodItem extends StatefulWidget {
   PaymentMethod paymentMethod;
   ValueChanged<PaymentMethod> onPressed;
+  ValueChanged<PaymentMethod> onChecked;
 
-  PickUpMethodItem({Key key, this.paymentMethod, this.onPressed}) : super(key: key);
+  PickUpMethodItem({Key key, this.paymentMethod, this.onPressed, this.onChecked}) : super(key: key);
 
   @override
   _PickUpMethodItemState createState() => _PickUpMethodItemState();
@@ -24,6 +25,10 @@ class _PickUpMethodItemState extends State<PickUpMethodItem> {
       highlightColor: Theme.of(context).primaryColor,
       onTap: () {
         this.widget.onPressed(widget.paymentMethod);
+
+        if(widget.paymentMethod.selected){
+          this.widget.onChecked(widget.paymentMethod);
+        }
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),

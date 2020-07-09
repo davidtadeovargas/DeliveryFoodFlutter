@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/dialogs/PickupCarInformationDialog.dart';
+import 'package:food_delivery_app/src/models/VehiculeInformation.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -30,6 +34,9 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
     _con = controller;
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     if (_con.list == null) {
@@ -37,6 +44,8 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
 //      widget.pickup = widget.list.pickupList.elementAt(0);
 //      widget.delivery = widget.list.pickupList.elementAt(1);
     }
+
+
     return Scaffold(
       key: _con.scaffoldKey,
       bottomNavigationBar: CartBottomDetailsWidget(con: _con),
@@ -85,6 +94,17 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                 paymentMethod: _con.getPickUpMethod(),
                 onPressed: (paymentMethod) {
                   _con.togglePickUp();
+                },
+                onChecked: (paymentMethod){
+                  PickupCarInformationDialog(
+                    onResult: (VehiculeInformation){
+                      _con.VehiculeInformation_ = VehiculeInformation;
+                    },
+                    onCancel: (VehiculeInformation){
+                      _con.VehiculeInformation_ = null;
+                    },
+                    context: context
+                  ).showPickupDialog();
                 }),
             Column(
               children: <Widget>[

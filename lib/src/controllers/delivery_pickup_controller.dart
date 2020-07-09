@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/models/VehiculeInformation.dart';
 
 import '../../generated/l10n.dart';
 import '../models/address.dart' as model;
@@ -8,9 +9,11 @@ import '../repository/user_repository.dart' as userRepo;
 import 'cart_controller.dart';
 
 class DeliveryPickupController extends CartController {
+
   GlobalKey<ScaffoldState> scaffoldKey;
   model.Address deliveryAddress;
   PaymentMethodList list;
+  VehiculeInformation VehiculeInformation_ = null;
 
   DeliveryPickupController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -86,6 +89,35 @@ class DeliveryPickupController extends CartController {
 
   @override
   void goCheckout(BuildContext context) {
-    Navigator.of(context).pushNamed(getSelectedMethod().route);
+
+    //If is for pickup
+    PaymentMethod selectedMehotd = getSelectedMethod();
+    PaymentMethod pickUpMethod = getPickUpMethod();
+    if(selectedMehotd==pickUpMethod){
+
+      //If vehicule information is still not filled
+      if(VehiculeInformation_==null){
+        showDialog(
+            context: context,
+            builder: (BuildContext context){
+              return AlertDialog(
+                title: Text("Ups :("),
+                content: Text("Please fill vehicule information first"),
+                actions:[
+                  FlatButton(
+                    child: Text("Ok"),
+                    onPressed: (){
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            }
+        );
+        return;
+      }
+    }
+
+    Navigator.of(context).pushNamed(selectedMehotd.route);
   }
 }
