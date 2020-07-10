@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/controllers/food_controller.dart';
 
 import '../helpers/helper.dart';
 import '../models/extra.dart';
@@ -6,11 +7,13 @@ import '../models/extra.dart';
 class ExtraItemWidget extends StatefulWidget {
   final Extra extra;
   final VoidCallback onChanged;
+  FoodController FoodController_;
 
   ExtraItemWidget({
     Key key,
     this.extra,
     this.onChanged,
+    this.FoodController_,
   }) : super(key: key);
 
   @override
@@ -62,13 +65,34 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+
         if (widget.extra.checked) {
+
           animationController.reverse();
+
+          widget.FoodController_.resetExtracount();
+          widget.extra.checked = false;
+          widget.onChanged();
+
         } else {
-          animationController.forward();
+
+          //When the extra count is equals 2 it can not add more ingredients
+          if(widget.FoodController_.getExtracount()==2){
+            widget.extra.checked = false; //Reset
+            animationController.reverse(); //Reset
+
+            //Show dialog of exceeds ingredients
+            widget.FoodController_.showExccedsIngredientsDialog();
+          }
+          else{
+
+            animationController.forward();
+            widget.extra.checked = true;
+            widget.onChanged();
+            widget.FoodController_.addExtracount();
+          }
         }
-        widget.extra.checked = !widget.extra.checked;
-        widget.onChanged();
+
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

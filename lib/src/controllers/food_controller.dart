@@ -17,9 +17,44 @@ class FoodController extends ControllerMVC {
   Favorite favorite;
   bool loadCart = false;
   GlobalKey<ScaffoldState> scaffoldKey;
+  int extraCount = 1;
+
 
   FoodController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
+  }
+
+  void showExccedsIngredientsDialog(){
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Ups :("),
+            content: Text("Only one ingredient is posible"),
+            actions:[
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
+
+  void addExtracount(){
+    extraCount++;
+  }
+
+  void resetExtracount(){
+    extraCount = 1;
+  }
+
+  int getExtracount(){
+    return extraCount;
   }
 
   void listenForFood({String foodId, String message}) async {

@@ -212,6 +212,7 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                                   return ExtraItemWidget(
                                                     extra: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex),
                                                     onChanged: _con.calculateTotal,
+                                                    FoodController_: _con,
                                                   );
                                                 },
                                                 separatorBuilder: (context, index) {
