@@ -19,6 +19,9 @@ import '../repository/user_repository.dart';
 class FoodWidget extends StatefulWidget {
   RouteArgument routeArgument;
 
+  bool pepinillos = true;
+  bool aceitunas = false;
+
   FoodWidget({Key key, this.routeArgument}) : super(key: key);
 
   @override
@@ -28,8 +31,11 @@ class FoodWidget extends StatefulWidget {
 }
 
 enum SingingCharacter { pepinillos, aceitunas }
+
 class _FoodWidgetState extends StateMVC<FoodWidget> {
   FoodController _con;
+
+  SingingCharacter _character = SingingCharacter.pepinillos;
 
   _FoodWidgetState() : super(FoodController()) {
     _con = controller;
@@ -46,7 +52,6 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
   @override
   Widget build(BuildContext context) {
 
-     SingingCharacter _character = SingingCharacter.pepinillos;
     return Scaffold(
       key: _con.scaffoldKey,
       body: _con.food == null || _con.food?.image == null
@@ -169,7 +174,56 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                 ),
                                 Divider(height: 20),
                                 Helper.applyHtml(context, _con.food.description, style: TextStyle(fontSize: 10)),
-                    
+                                Divider(height: 20),
+                                ListTile(
+                                  dense: true,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 10),
+                                  leading: Icon(
+                                    Icons.radio_button_checked,
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                                  title: Text(
+                                    "Select option",
+                                    style: Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                      title: const Text('Pepinillos'),
+                                      leading: Radio(
+                                        value: SingingCharacter.pepinillos,
+                                        groupValue: _character,
+                                        onChanged: (SingingCharacter value) {
+                                          setState(() {
+
+                                            _character = value;
+
+                                            widget.pepinillos = true;
+                                            widget.aceitunas = false;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: const Text('Aceitunas'),
+                                      leading: Radio(
+                                        value: SingingCharacter.aceitunas,
+                                        groupValue: _character,
+                                        onChanged: (SingingCharacter value) {
+                                          setState(() {
+
+                                            _character = value;
+
+                                            widget.aceitunas = true;
+                                            widget.pepinillos = false;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
                                 ListTile(
                                   dense: true,
                                   contentPadding: EdgeInsets.symmetric(vertical: 10),
