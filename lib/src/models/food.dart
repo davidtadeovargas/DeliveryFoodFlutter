@@ -23,6 +23,7 @@ class Food {
   Restaurant restaurant;
   Category category;
   List<Extra> extras;
+  List<Extra> extrasBase;
   List<ExtraGroup> extraGroups;
   List<Review> foodReviews;
   List<Nutrition> nutritions;
@@ -48,6 +49,9 @@ class Food {
       category = jsonMap['category'] != null ? Category.fromJSON(jsonMap['category']) : Category.fromJSON({});
       image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? Media.fromJSON(jsonMap['media'][0]) : new Media();
       extras = jsonMap['extras'] != null && (jsonMap['extras'] as List).length > 0
+          ? List.from(jsonMap['extras']).map((element) => Extra.fromJSON(element)).toSet().toList()
+          : [];
+      extrasBase = jsonMap['extras'] != null && (jsonMap['extras'] as List).length > 0
           ? List.from(jsonMap['extras']).map((element) => Extra.fromJSON(element)).toSet().toList()
           : [];
       extraGroups = jsonMap['extra_groups'] != null && (jsonMap['extra_groups'] as List).length > 0

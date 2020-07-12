@@ -19,30 +19,13 @@ class FoodController extends ControllerMVC {
   GlobalKey<ScaffoldState> scaffoldKey;
   int extraCount = 1;
 
+  AnimationController previousAnimationController;
+  Extra extra;
+
+  bool firstExtra = true;
 
   FoodController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
-  }
-
-  void showExccedsIngredientsDialog(){
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Ups :("),
-            content: Text("Only one ingredient is posible"),
-            actions:[
-              FlatButton(
-                child: Text("Ok"),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        }
-    );
   }
 
   void addExtracount(){
@@ -106,6 +89,7 @@ class FoodController extends ControllerMVC {
     var _newCart = new Cart();
     _newCart.food = food;
     _newCart.extras = food.extras.where((element) => element.checked).toList();
+    _newCart.extraBase = food.extrasBase.where((element) => element.checked).first;
     _newCart.quantity = this.quantity;
     // if food exist in the cart then increment quantity
     var _oldCart = isExistInCart(_newCart);

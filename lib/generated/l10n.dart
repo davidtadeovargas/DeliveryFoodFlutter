@@ -126,6 +126,24 @@ class S {
     );
   }
 
+  String get Please_fill_vehicule_information_first {
+    return Intl.message(
+      'Please fill vehicule information first',
+      name: 'Please_fill_vehicule_information_first',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ups {
+    return Intl.message(
+      'Ups :(',
+      name: 'ups',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get submit {
     return Intl.message(
       'Submit',
@@ -436,6 +454,15 @@ class S {
     return Intl.message(
       'Confirmation',
       name: 'confirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
       desc: '',
       args: [],
     );

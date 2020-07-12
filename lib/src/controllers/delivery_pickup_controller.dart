@@ -101,11 +101,11 @@ class DeliveryPickupController extends CartController {
             context: context,
             builder: (BuildContext context){
               return AlertDialog(
-                title: Text("Ups :("),
-                content: Text("Please fill vehicule information first"),
+                title: Text(S.of(context).ups),
+                content: Text(S.of(context).Please_fill_vehicule_information_first),
                 actions:[
                   FlatButton(
-                    child: Text("Ok"),
+                    child: Text(S.of(context).ok),
                     onPressed: (){
                       Navigator.of(context).pop();
                     },

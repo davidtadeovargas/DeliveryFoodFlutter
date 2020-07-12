@@ -172,9 +172,11 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                         )),
                                   ],
                                 ),
+
                                 Divider(height: 20),
                                 Helper.applyHtml(context, _con.food.description, style: TextStyle(fontSize: 10)),
                                 Divider(height: 20),
+
                                 ListTile(
                                   dense: true,
                                   contentPadding: EdgeInsets.symmetric(vertical: 10),
@@ -187,42 +189,58 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                     style: Theme.of(context).textTheme.subtitle1,
                                   ),
                                 ),
-                                Column(
-                                  children: <Widget>[
-                                    ListTile(
-                                      title: const Text('Pepinillos'),
-                                      leading: Radio(
-                                        value: SingingCharacter.pepinillos,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter value) {
-                                          setState(() {
 
-                                            _character = value;
+                                _con.food.extraGroups == null
+                                    ? CircularLoadingWidget(height: 100)
+                                    : ListView.separated(
+                                  padding: EdgeInsets.all(0),
+                                  itemBuilder: (context, extraGroupIndex) {
+                                    var extraGroup = _con.food.extraGroups.elementAt(extraGroupIndex);
+                                    return Wrap(
+                                      children: <Widget>[
+                                        ListTile(
+                                          dense: true,
+                                          contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                          leading: Icon(
+                                            Icons.add_circle_outline,
+                                            color: Theme.of(context).hintColor,
+                                          ),
+                                          title: Text(
+                                            extraGroup.name,
+                                            style: Theme.of(context).textTheme.subtitle1,
+                                          ),
+                                        ),
+                                        ListView.separated(
+                                          padding: EdgeInsets.all(0),
+                                          itemBuilder: (context, extraIndex) {
+                                            return ExtraItemWidget(
+                                              extra: _con.food.extrasBase.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex),
+                                              onChanged:null,
+                                              showPrice: false,
+                                              onlyOneSelection: true,
+                                              FoodController_: _con,
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) {
+                                            return SizedBox(height: 20);
+                                          },
+                                          itemCount: _con.food.extrasBase.where((extra) => extra.extraGroupId == extraGroup.id).length,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                        ),
 
-                                            widget.pepinillos = true;
-                                            widget.aceitunas = false;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    ListTile(
-                                      title: const Text('Aceitunas'),
-                                      leading: Radio(
-                                        value: SingingCharacter.aceitunas,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter value) {
-                                          setState(() {
-
-                                            _character = value;
-
-                                            widget.aceitunas = true;
-                                            widget.pepinillos = false;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                                      ],
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: 20);
+                                  },
+                                  itemCount: _con.food.extraGroups.length,
+                                  primary: false,
+                                  shrinkWrap: true,
                                 ),
+
+                                Divider(height: 20),
 
                                 ListTile(
                                   dense: true,
@@ -240,6 +258,8 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                     style: Theme.of(context).textTheme.caption,
                                   ),
                                 ),
+
+
                                 _con.food.extraGroups == null
                                     ? CircularLoadingWidget(height: 100)
                                     : ListView.separated(
@@ -265,7 +285,9 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                                 itemBuilder: (context, extraIndex) {
                                                   return ExtraItemWidget(
                                                     extra: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex),
-                                                    onChanged: _con.calculateTotal,
+                                                    onChanged:_con.calculateTotal,
+                                                    showPrice: true,
+                                                    onlyOneSelection: false,
                                                     FoodController_: _con,
                                                   );
                                                 },
@@ -276,13 +298,7 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                                 primary: false,
                                                 shrinkWrap: true,
                                               ),
-                                                RadioButtonGroup(
-                                                labels: <String>[
-                                                 extraGroup.name,
-                                                ],
-                                                onChange: (String label, int index) => print("label: $label index: $index"),
-                                                onSelected: (String label) => print(label),
-                                              ),
+
                                             ],
                                           );
                                         },

@@ -102,6 +102,8 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                     },
                     onCancel: (VehiculeInformation){
                       _con.VehiculeInformation_ = null;
+
+                      _con.togglePickUp();
                     },
                     context: context
                   ).showPickupDialog();

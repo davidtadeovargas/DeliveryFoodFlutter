@@ -7,6 +7,7 @@ class Cart {
   Food food;
   double quantity;
   List<Extra> extras;
+  Extra extraBase;
   String userId;
 
   Cart();

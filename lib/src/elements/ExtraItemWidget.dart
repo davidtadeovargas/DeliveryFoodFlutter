@@ -7,12 +7,16 @@ import '../models/extra.dart';
 class ExtraItemWidget extends StatefulWidget {
   final Extra extra;
   final VoidCallback onChanged;
-  FoodController FoodController_;
+  final bool showPrice;
+  final bool onlyOneSelection;
+  final FoodController FoodController_;
 
   ExtraItemWidget({
     Key key,
     this.extra,
     this.onChanged,
+    this.showPrice,
+    this.onlyOneSelection,
     this.FoodController_,
   }) : super(key: key);
 
@@ -53,6 +57,53 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
       ..addListener(() {
         setState(() {});
       });
+
+    if(widget.FoodController_.firstExtra){
+      _forward();
+      widget.FoodController_.firstExtra = false;
+    }
+  }
+
+  void _reverse(){
+
+    bool rev = false;
+    if(widget.onlyOneSelection){
+
+      if(widget.FoodController_.previousAnimationController!=animationController){
+        widget.FoodController_.resetExtracount();
+        rev = true;
+      }
+    }
+    else{
+      rev = true;
+    }
+
+    if(rev){
+      animationController.reverse();
+      widget.extra.checked = false;
+    }
+  }
+
+  void _forward(){
+
+    animationController.forward();
+    widget.extra.checked = true;
+
+    if(widget.onlyOneSelection) {
+      if (widget.FoodController_.getExtracount() == 2) {
+        widget.FoodController_.previousAnimationController.reverse();
+        widget.FoodController_.extra.checked = false;
+        widget.FoodController_.previousAnimationController = null;
+      }
+      else {
+        widget.FoodController_.addExtracount();
+      }
+
+      if(widget.FoodController_.previousAnimationController==null){
+        widget.FoodController_.previousAnimationController = animationController;
+        widget.FoodController_.extra = widget.extra;
+      }
+    }
   }
 
   @override
@@ -68,30 +119,14 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
 
         if (widget.extra.checked) {
 
-          animationController.reverse();
-
-          widget.FoodController_.resetExtracount();
-          widget.extra.checked = false;
-          widget.onChanged();
+          _reverse();
 
         } else {
 
-          //When the extra count is equals 2 it can not add more ingredients
-          if(widget.FoodController_.getExtracount()==2){
-            widget.extra.checked = false; //Reset
-            animationController.reverse(); //Reset
-
-            //Show dialog of exceeds ingredients
-            widget.FoodController_.showExccedsIngredientsDialog();
-          }
-          else{
-
-            animationController.forward();
-            widget.extra.checked = true;
-            widget.onChanged();
-            widget.FoodController_.addExtracount();
-          }
+          _forward();
         }
+
+        widget.onChanged();
 
       },
       child: Row(
@@ -151,7 +186,7 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
                   ),
                 ),
                 SizedBox(width: 8),
-                Helper.getPrice(widget.extra.price, context, style: Theme.of(context).textTheme.headline4),
+                widget.showPrice ? Helper.getPrice(widget.extra.price, context, style: Theme.of(context).textTheme.headline4):SizedBox(width: 8),
               ],
             ),
           )
