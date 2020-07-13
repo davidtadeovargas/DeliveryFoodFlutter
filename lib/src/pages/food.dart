@@ -195,7 +195,7 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                     : ListView.separated(
                                   padding: EdgeInsets.all(0),
                                   itemBuilder: (context, extraGroupIndex) {
-                                    var extraGroup = _con.food.extraGroups.elementAt(extraGroupIndex);
+                                    var extraGroup = _con.food.extraGroups.where((element) => element.forzed == true).elementAt(extraGroupIndex);
                                     return Wrap(
                                       children: <Widget>[
                                         ListTile(
@@ -235,7 +235,7 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                   separatorBuilder: (context, index) {
                                     return SizedBox(height: 20);
                                   },
-                                  itemCount: _con.food.extraGroups.length,
+                                  itemCount: _con.food.extraGroups.where((element) => element.forzed == true).length,
                                   primary: false,
                                   shrinkWrap: true,
                                 ),

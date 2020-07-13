@@ -3,6 +3,7 @@ import '../helpers/custom_trace.dart';
 class ExtraGroup {
   String id;
   String name;
+  bool forzed;
 
   ExtraGroup();
 
@@ -10,9 +11,12 @@ class ExtraGroup {
     try {
       id = jsonMap['id'].toString();
       name = jsonMap['name'];
+      int forzed_ = jsonMap['forzed'];
+      forzed = forzed_==1;
     } catch (e) {
       id = '';
       name = '';
+      forzed = false;
       print(CustomTrace(StackTrace.current, message: e));
     }
   }
