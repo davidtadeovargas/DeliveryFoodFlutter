@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/models/VehiculeInformation.dart';
+import 'package:food_delivery_app/src/repository/ComandaRepository.dart';
+import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../models/address.dart' as model;
@@ -12,8 +14,8 @@ class DeliveryPickupController extends CartController {
 
   GlobalKey<ScaffoldState> scaffoldKey;
   model.Address deliveryAddress;
-  PaymentMethodList list;
-  VehiculeInformation VehiculeInformation_ = null;
+  PaymentMethodRepository PaymentMethodRepository_;
+  ComandaRepository ComandaRepository_ = new ComandaRepository();
 
   DeliveryPickupController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -54,15 +56,15 @@ class DeliveryPickupController extends CartController {
   }
 
   PaymentMethod getPickUpMethod() {
-    return list.pickupList.elementAt(0);
+    return PaymentMethodRepository_.pickupList.elementAt(0);
   }
 
   PaymentMethod getDeliveryMethod() {
-    return list.pickupList.elementAt(1);
+    return PaymentMethodRepository_.pickupList.elementAt(1);
   }
 
   void toggleDelivery() {
-    list.pickupList.forEach((element) {
+    PaymentMethodRepository_.pickupList.forEach((element) {
       if (element != getDeliveryMethod()) {
         element.selected = false;
       }
@@ -73,7 +75,7 @@ class DeliveryPickupController extends CartController {
   }
 
   void togglePickUp() {
-    list.pickupList.forEach((element) {
+    PaymentMethodRepository_.pickupList.forEach((element) {
       if (element != getPickUpMethod()) {
         element.selected = false;
       }
@@ -84,7 +86,7 @@ class DeliveryPickupController extends CartController {
   }
 
   PaymentMethod getSelectedMethod() {
-    return list.pickupList.firstWhere((element) => element.selected);
+    return PaymentMethodRepository_.pickupList.firstWhere((element) => element.selected);
   }
 
   @override
@@ -96,7 +98,7 @@ class DeliveryPickupController extends CartController {
     if(selectedMehotd==pickUpMethod){
 
       //If vehicule information is still not filled
-      if(VehiculeInformation_==null){
+      if(ComandaRepository_.VehiculeInformation_==null){
         showDialog(
             context: context,
             builder: (BuildContext context){
@@ -117,6 +119,9 @@ class DeliveryPickupController extends CartController {
         return;
       }
     }
+
+    //Place the order
+    //addOrder(Order order, Payment payment);
 
     Navigator.of(context).pushNamed(selectedMehotd.route);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/repository/OrderRepository.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -243,7 +244,7 @@ class _TrackingWidgetState extends StateMVC<TrackingWidget> with SingleTickerPro
                                     child: Wrap(
                                       alignment: WrapAlignment.end,
                                       children: <Widget>[
-                                        if (_con.order.canCancelOrder())
+                                        if (new OrderRepository().canCancelOrder(_con.order))
                                           FlatButton(
                                             onPressed: () {
                                               showDialog(

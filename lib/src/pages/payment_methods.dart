@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/PaymentMethodListItemWidget.dart';
@@ -18,21 +19,21 @@ class PaymentMethodsWidget extends StatefulWidget {
 }
 
 class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
-  PaymentMethodList list;
+  PaymentMethodRepository PaymentMethodRepository_;
 
   @override
   Widget build(BuildContext context) {
-    list = new PaymentMethodList(context);
+    PaymentMethodRepository_ = new PaymentMethodRepository().instance(context);
     if (!setting.value.payPalEnabled)
-      list.paymentsList.removeWhere((element) {
+      PaymentMethodRepository_.paymentsList.removeWhere((element) {
         return element.id == "paypal";
       });
     if (!setting.value.razorPayEnabled)
-      list.paymentsList.removeWhere((element) {
+      PaymentMethodRepository_.paymentsList.removeWhere((element) {
         return element.id == "razorpay";
       });
     if (!setting.value.stripeEnabled)
-      list.paymentsList.removeWhere((element) {
+      PaymentMethodRepository_.paymentsList.removeWhere((element) {
         return element.id == "visacard" || element.id == "mastercard";
       });
     return Scaffold(
@@ -60,7 +61,7 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
               child: SearchBarWidget(),
             ),
             SizedBox(height: 15),
-            list.paymentsList.length > 0
+            PaymentMethodRepository_.paymentsList.length > 0
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ListTile(
@@ -86,15 +87,15 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               primary: false,
-              itemCount: list.paymentsList.length,
+              itemCount: PaymentMethodRepository_.paymentsList.length,
               separatorBuilder: (context, index) {
                 return SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
-                return PaymentMethodListItemWidget(paymentMethod: list.paymentsList.elementAt(index));
+                return PaymentMethodListItemWidget(paymentMethod: PaymentMethodRepository_.paymentsList.elementAt(index));
               },
             ),
-            list.cashList.length > 0
+            PaymentMethodRepository_.cashList.length > 0
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: ListTile(
@@ -119,12 +120,12 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               primary: false,
-              itemCount: list.cashList.length,
+              itemCount: PaymentMethodRepository_.cashList.length,
               separatorBuilder: (context, index) {
                 return SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
-                return PaymentMethodListItemWidget(paymentMethod: list.cashList.elementAt(index));
+                return PaymentMethodListItemWidget(paymentMethod: PaymentMethodRepository_.cashList.elementAt(index));
               },
             ),
           ],

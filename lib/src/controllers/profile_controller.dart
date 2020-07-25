@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/order.dart';
-import '../repository/order_repository.dart';
+import '../models/Order.dart';
+import '../repository/OrderRepository.dart';
 
 class ProfileController extends ControllerMVC {
   List<Order> recentOrders = [];
@@ -15,7 +15,10 @@ class ProfileController extends ControllerMVC {
   }
 
   void listenForRecentOrders({String message}) async {
-    final Stream<Order> stream = await getRecentOrders();
+
+    OrderRepository OrderRepository_ = new OrderRepository();
+
+    final Stream<Order> stream = await OrderRepository_.getRecentOrders();
     stream.listen((Order _order) {
       setState(() {
         recentOrders.add(_order);

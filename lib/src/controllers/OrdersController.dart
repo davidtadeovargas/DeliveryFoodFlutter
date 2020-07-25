@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/order.dart';
-import '../repository/order_repository.dart';
+import '../models/Order.dart';
+import '../repository/OrderRepository.dart';
 
 class OrderController extends ControllerMVC {
   List<Order> orders = <Order>[];
   GlobalKey<ScaffoldState> scaffoldKey;
+  OrderRepository OrderRepository_ = new OrderRepository();
 
   OrderController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -15,7 +16,8 @@ class OrderController extends ControllerMVC {
   }
 
   void listenForOrders({String message}) async {
-    final Stream<Order> stream = await getOrders();
+
+    final Stream<Order> stream = await OrderRepository_.getOrders();
     stream.listen((Order _order) {
       setState(() {
         orders.add(_order);
@@ -35,7 +37,7 @@ class OrderController extends ControllerMVC {
   }
 
   void doCancelOrder(Order order) {
-    cancelOrder(order).then((value) {
+    OrderRepository_.cancelOrder(order).then((value) {
       setState(() {
         order.active = false;
       });

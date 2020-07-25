@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/models/Order.dart';
+import 'package:food_delivery_app/src/repository/OrderRepository.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
-import '../models/order.dart';
 import '../models/route_argument.dart';
 import 'FoodOrderItemWidget.dart';
 
@@ -131,7 +132,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 0),
                     ),
-                    if (widget.order.canCancelOrder())
+                    if (new OrderRepository().canCancelOrder(widget.order))
                       FlatButton(
                         onPressed: () {
                           showDialog(

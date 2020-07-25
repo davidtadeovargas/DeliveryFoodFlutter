@@ -3,11 +3,11 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../models/food.dart';
-import '../models/order.dart';
+import '../models/Order.dart';
 import '../models/order_status.dart';
 import '../models/review.dart';
 import '../repository/food_repository.dart' as foodRepo;
-import '../repository/order_repository.dart';
+import '../repository/OrderRepository.dart';
 import '../repository/restaurant_repository.dart' as restaurantRepo;
 
 class ReviewsController extends ControllerMVC {
@@ -24,7 +24,10 @@ class ReviewsController extends ControllerMVC {
   }
 
   void listenForOrder({String orderId, String message}) async {
-    final Stream<Order> stream = await getOrder(orderId);
+
+    OrderRepository OrderRepository_ = new OrderRepository();
+
+    final Stream<Order> stream = await OrderRepository_.getOrder(orderId);
     stream.listen((Order _order) {
       setState(() {
         order = _order;

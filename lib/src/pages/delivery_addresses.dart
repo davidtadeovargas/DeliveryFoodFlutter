@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -25,7 +26,7 @@ class DeliveryAddressesWidget extends StatefulWidget {
 
 class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
   DeliveryAddressesController _con;
-  PaymentMethodList list;
+  PaymentMethodRepository PaymentMethodRepository_;
 
   _DeliveryAddressesWidgetState() : super(DeliveryAddressesController()) {
     _con = controller;
@@ -33,7 +34,7 @@ class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    list = new PaymentMethodList(context);
+    PaymentMethodRepository_ = new PaymentMethodRepository().instance(context);
     return Scaffold(
       key: _con.scaffoldKey,
       appBar: AppBar(

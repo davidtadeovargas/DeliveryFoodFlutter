@@ -16,7 +16,7 @@ import '../../generated/l10n.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../models/cart.dart';
 import '../models/food_order.dart';
-import '../models/order.dart';
+import '../models/Order.dart';
 import '../models/restaurant.dart';
 import '../repository/settings_repository.dart';
 import 'app_config.dart' as config;

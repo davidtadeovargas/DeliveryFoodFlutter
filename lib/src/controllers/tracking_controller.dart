@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/models/Order.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
-import '../models/order.dart';
 import '../models/order_status.dart';
-import '../repository/order_repository.dart';
+import '../repository/OrderRepository.dart';
 
 class TrackingController extends ControllerMVC {
   Order order;
   List<OrderStatus> orderStatus = <OrderStatus>[];
   GlobalKey<ScaffoldState> scaffoldKey;
+  OrderRepository OrderRepository_ = new OrderRepository();
 
   TrackingController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
   }
 
   void listenForOrder({String orderId, String message}) async {
-    final Stream<Order> stream = await getOrder(orderId);
+
+    final Stream<Order> stream = await OrderRepository_.getOrder(orderId);
     stream.listen((Order _order) {
       setState(() {
         order = _order;
@@ -39,7 +41,7 @@ class TrackingController extends ControllerMVC {
   }
 
   void listenForOrderStatus() async {
-    final Stream<OrderStatus> stream = await getOrderStatus();
+    final Stream<OrderStatus> stream = await OrderRepository_.getOrderStatus();
     stream.listen((OrderStatus _orderStatus) {
       setState(() {
         orderStatus.add(_orderStatus);
@@ -80,7 +82,7 @@ class TrackingController extends ControllerMVC {
   }
 
   void doCancelOrder() {
-    cancelOrder(this.order).then((value) {
+    OrderRepository_.cancelOrder(this.order).then((value) {
       setState(() {
         this.order.active = false;
       });

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/repository/ComandaRepository.dart';
+import 'package:food_delivery_app/src/repository/OrderRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../models/cart.dart';
 import '../models/credit_card.dart';
 import '../models/food_order.dart';
-import '../models/order.dart';
+import '../models/Order.dart';
 import '../models/order_status.dart';
 import '../models/payment.dart';
-import '../repository/order_repository.dart' as orderRepo;
+import '../repository/OrderRepository.dart' as orderRepo;
 import '../repository/settings_repository.dart' as settingRepo;
 import '../repository/user_repository.dart' as userRepo;
 import 'cart_controller.dart';
 
 class CheckoutController extends CartController {
   Payment payment;
+
   double taxAmount = 0.0;
   double deliveryFee = 0.0;
   double subTotal = 0.0;
@@ -39,6 +42,11 @@ class CheckoutController extends CartController {
   }
 
   void addOrder(List<Cart> carts) async {
+
+    OrderRepository OrderRepository_ = new OrderRepository();
+
+    ComandaRepository ComandaRepository_ = new ComandaRepository();
+
     Order _order = new Order();
     _order.foodOrders = new List<FoodOrder>();
     _order.tax = carts[0].food.restaurant.defaultTax;
@@ -47,6 +55,8 @@ class CheckoutController extends CartController {
     _orderStatus.id = '1'; // TODO default order status Id
     _order.orderStatus = _orderStatus;
     _order.deliveryAddress = settingRepo.deliveryAddress.value;
+    _order.colorCar = ComandaRepository_.VehiculeInformation_.color;
+    _order.placesCar = ComandaRepository_.VehiculeInformation_.plates;
     carts.forEach((_cart) {
       FoodOrder _foodOrder = new FoodOrder();
       _foodOrder.quantity = _cart.quantity;
@@ -55,7 +65,7 @@ class CheckoutController extends CartController {
       _foodOrder.extras = _cart.extras;
       _order.foodOrders.add(_foodOrder);
     });
-    orderRepo.addOrder(_order, this.payment).then((value) {
+    OrderRepository_.addOrder(_order, this.payment).then((value) {
       if (value is Order) {
         setState(() {
           loading = false;
