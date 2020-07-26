@@ -8,7 +8,7 @@ import '../elements/OrderItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../repository/user_repository.dart';
+import '../repository/UserRepository.dart';
 
 class OrdersWidget extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldKey;
@@ -20,7 +20,9 @@ class OrdersWidget extends StatefulWidget {
 }
 
 class _OrdersWidgetState extends StateMVC<OrdersWidget> {
+
   OrderController _con;
+  UserRepository UserRepository_ = new UserRepository();
 
   _OrdersWidgetState() : super(OrderController()) {
     _con = controller;
@@ -47,7 +49,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
           new ShoppingCartButtonWidget(iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
         ],
       ),
-      body: currentUser.value.apiToken == null
+      body: UserRepository_.currentUser.value.apiToken == null
           ? PermissionDeniedWidget()
           : _con.orders.isEmpty
               ? EmptyOrdersWidget()

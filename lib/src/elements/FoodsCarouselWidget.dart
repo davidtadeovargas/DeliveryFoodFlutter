@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../elements/FoodsCarouselItemWidget.dart';
 import '../elements/FoodsCarouselLoaderWidget.dart';
-import '../models/food.dart';
+import '../models/Food.dart';
 
 class FoodsCarouselWidget extends StatelessWidget {
   final List<Food> foodsList;

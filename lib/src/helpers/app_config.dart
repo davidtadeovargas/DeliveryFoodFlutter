@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../repository/settings_repository.dart' as settingRepo;
+import '../repository/SettingsRepository.dart';
 
 class App {
+
   BuildContext _context;
   double _height;
   double _width;
@@ -37,9 +37,12 @@ class App {
 }
 
 class Colors {
+
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
+
   Color mainColor(double opacity) {
     try {
-      return Color(int.parse(settingRepo.setting.value.mainColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.mainColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }
@@ -47,7 +50,7 @@ class Colors {
 
   Color secondColor(double opacity) {
     try {
-      return Color(int.parse(settingRepo.setting.value.secondColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.secondColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }
@@ -55,7 +58,7 @@ class Colors {
 
   Color accentColor(double opacity) {
     try {
-      return Color(int.parse(settingRepo.setting.value.accentColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.accentColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }
@@ -63,7 +66,7 @@ class Colors {
 
   Color mainDarkColor(double opacity) {
     try {
-      return Color(int.parse(settingRepo.setting.value.mainDarkColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.mainDarkColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }
@@ -71,7 +74,7 @@ class Colors {
 
   Color secondDarkColor(double opacity) {
     try {
-      return Color(int.parse(settingRepo.setting.value.secondDarkColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.secondDarkColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }
@@ -79,7 +82,7 @@ class Colors {
 
   Color accentDarkColor(double opacity) {
     try {
-      return Color(int.parse(settingRepo.setting.value.accentDarkColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.accentDarkColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }
@@ -88,7 +91,7 @@ class Colors {
   Color scaffoldColor(double opacity) {
     // TODO test if brightness is dark or not
     try {
-      return Color(int.parse(settingRepo.setting.value.scaffoldColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
+      return Color(int.parse(SettingsRepository_.setting.value.scaffoldColor.replaceAll("#", "0xFF"))).withOpacity(opacity);
     } catch (e) {
       return Color(0xFFCCCCCC).withOpacity(opacity);
     }

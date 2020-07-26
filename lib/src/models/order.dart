@@ -1,9 +1,9 @@
 import '../helpers/custom_trace.dart';
 import '../models/address.dart';
-import '../models/food_order.dart';
+import '../models/FoodOrder.dart';
 import '../models/order_status.dart';
 import '../models/payment.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 class Order {
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
-import '../models/food.dart';
+import '../models/Food.dart';
 
 typedef FoodBoolFunc = void Function(Food food, {bool reset});
 

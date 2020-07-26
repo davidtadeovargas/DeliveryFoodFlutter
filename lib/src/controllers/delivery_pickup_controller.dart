@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/src/models/VehiculeInformation.dart';
 import 'package:food_delivery_app/src/repository/ComandaRepository.dart';
 import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../models/address.dart' as model;
 import '../models/payment_method.dart';
-import '../repository/settings_repository.dart' as settingRepo;
-import '../repository/user_repository.dart' as userRepo;
-import 'cart_controller.dart';
+import '../repository/SettingsRepository.dart';
+import '../repository/UserRepository.dart';
+import 'CartController.dart';
 
 class DeliveryPickupController extends CartController {
 
@@ -16,23 +15,25 @@ class DeliveryPickupController extends CartController {
   model.Address deliveryAddress;
   PaymentMethodRepository PaymentMethodRepository_;
   ComandaRepository ComandaRepository_ = new ComandaRepository();
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  UserRepository UserRepository_ = new UserRepository();
 
   DeliveryPickupController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
     super.listenForCarts();
     listenForDeliveryAddress();
-    print(settingRepo.deliveryAddress.value.toMap());
+    print(SettingsRepository_.deliveryAddress.value.toMap());
   }
 
   void listenForDeliveryAddress() async {
-    this.deliveryAddress = settingRepo.deliveryAddress.value;
+    this.deliveryAddress = SettingsRepository_.deliveryAddress.value;
     print(this.deliveryAddress.id);
   }
 
   void addAddress(model.Address address) {
-    userRepo.addAddress(address).then((value) {
+    UserRepository_.addAddress(address).then((value) {
       setState(() {
-        settingRepo.deliveryAddress.value = value;
+        SettingsRepository_.deliveryAddress.value = value;
         this.deliveryAddress = value;
       });
     }).whenComplete(() {
@@ -43,9 +44,9 @@ class DeliveryPickupController extends CartController {
   }
 
   void updateAddress(model.Address address) {
-    userRepo.updateAddress(address).then((value) {
+    UserRepository_.updateAddress(address).then((value) {
       setState(() {
-        settingRepo.deliveryAddress.value = value;
+        SettingsRepository_.deliveryAddress.value = value;
         this.deliveryAddress = value;
       });
     }).whenComplete(() {

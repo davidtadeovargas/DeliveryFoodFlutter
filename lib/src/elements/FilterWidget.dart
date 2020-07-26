@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/filter_controller.dart';
+import '../controllers/FilterController.dart';
 import '../elements/CircularLoadingWidget.dart';
-import '../models/filter.dart';
+import '../models/Filter.dart';
 
 class FilterWidget extends StatefulWidget {
   final ValueChanged<Filter> onFilter;

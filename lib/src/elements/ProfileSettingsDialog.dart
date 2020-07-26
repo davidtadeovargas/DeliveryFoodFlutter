@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 class ProfileSettingsDialog extends StatefulWidget {
   final User user;

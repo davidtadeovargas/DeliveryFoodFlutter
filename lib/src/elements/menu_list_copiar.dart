@@ -4,7 +4,7 @@ import 'package:food_delivery_app/src/models/categoria.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/restaurant_controller.dart';
+import '../controllers/RestaurantController.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/DrawerWidget.dart';
 import '../elements/FoodItemWidget.dart';

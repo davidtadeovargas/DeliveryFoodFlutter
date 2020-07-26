@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
-import '../models/restaurant.dart';
+import '../models/Restaurant.dart';
 import '../models/route_argument.dart';
-import '../repository/settings_repository.dart';
+import '../repository/SettingsRepository.dart';
 
 // ignore: must_be_immutable
 class CardWidget extends StatelessWidget {
   Restaurant restaurant;
   String heroTag;
+
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
 
   CardWidget({Key key, this.restaurant, this.heroTag}) : super(key: key);
   @override
@@ -134,7 +136,7 @@ class CardWidget extends StatelessWidget {
                       ),
                       restaurant.distance > 0
                           ? Text(
-                              Helper.getDistance(restaurant.distance, Helper.of(context).trans(setting.value.distanceUnit)),
+                              Helper.getDistance(restaurant.distance, Helper.of(context).trans(SettingsRepository_.setting.value.distanceUnit)),
                               overflow: TextOverflow.fade,
                               maxLines: 1,
                               softWrap: false,

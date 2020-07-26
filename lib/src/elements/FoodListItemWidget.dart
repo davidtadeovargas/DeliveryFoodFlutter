@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
-import '../models/food.dart';
+import '../models/Food.dart';
 import '../models/route_argument.dart';
 
 // ignore: must_be_immutable

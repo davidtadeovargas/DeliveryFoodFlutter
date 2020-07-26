@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/food.dart';
+import '../models/Food.dart';
 import '../models/route_argument.dart';
 
 class FoodGridItemWidget extends StatefulWidget {

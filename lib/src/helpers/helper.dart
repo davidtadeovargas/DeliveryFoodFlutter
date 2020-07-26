@@ -14,20 +14,22 @@ import 'package:html/parser.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/CircularLoadingWidget.dart';
-import '../models/cart.dart';
-import '../models/food_order.dart';
+import '../models/Cart.dart';
+import '../models/FoodOrder.dart';
 import '../models/Order.dart';
-import '../models/restaurant.dart';
-import '../repository/settings_repository.dart';
+import '../models/Restaurant.dart';
+import '../repository/SettingsRepository.dart';
 import 'app_config.dart' as config;
 import 'custom_trace.dart';
 
 class Helper {
+
   BuildContext context;
 
   Helper.of(BuildContext _context) {
     this.context = _context;
   }
+
 
   // for mapping data retrieved form json array
   static getData(Map<String, dynamic> data) {
@@ -55,6 +57,9 @@ class Helper {
 
   static Future<Marker> getMarker(Map<String, dynamic> res) async {
     final Uint8List markerIcon = await getBytesFromAsset('assets/img/marker.png', 120);
+
+    SettingsRepository SettingsRepository_ = new SettingsRepository();
+
     final Marker marker = Marker(
         markerId: MarkerId(res['id']),
         icon: BitmapDescriptor.fromBytes(markerIcon),
@@ -64,7 +69,7 @@ class Helper {
         anchor: Offset(0.5, 0.5),
         infoWindow: InfoWindow(
             title: res['name'],
-            snippet: getDistance(res['distance'].toDouble(), setting.value.distanceUnit),
+            snippet: getDistance(res['distance'].toDouble(), SettingsRepository_.setting.value.distanceUnit),
             onTap: () {
               print(CustomTrace(StackTrace.current, message: 'Info Window'));
             }),
@@ -99,6 +104,9 @@ class Helper {
   }
 
   static Widget getPrice(double myPrice, BuildContext context, {TextStyle style}) {
+
+    SettingsRepository SettingsRepository_ = new SettingsRepository();
+
     if (style != null) {
       style = style.merge(TextStyle(fontSize: style.fontSize + 2));
     }
@@ -110,20 +118,20 @@ class Helper {
         softWrap: false,
         overflow: TextOverflow.fade,
         maxLines: 1,
-        text: setting.value?.currencyRight != null && setting.value?.currencyRight == false
+        text: SettingsRepository_.setting.value?.currencyRight != null && SettingsRepository_.setting.value?.currencyRight == false
             ? TextSpan(
-                text: setting.value?.defaultCurrency,
+                text: SettingsRepository_.setting.value?.defaultCurrency,
                 style: style ?? Theme.of(context).textTheme.subtitle1,
                 children: <TextSpan>[
-                  TextSpan(text: myPrice.toStringAsFixed(setting.value?.currencyDecimalDigits) ?? '', style: style ?? Theme.of(context).textTheme.subtitle1),
+                  TextSpan(text: myPrice.toStringAsFixed(SettingsRepository_.setting.value?.currencyDecimalDigits) ?? '', style: style ?? Theme.of(context).textTheme.subtitle1),
                 ],
               )
             : TextSpan(
-                text: myPrice.toStringAsFixed(setting.value?.currencyDecimalDigits) ?? '',
+                text: myPrice.toStringAsFixed(SettingsRepository_.setting.value?.currencyDecimalDigits) ?? '',
                 style: style ?? Theme.of(context).textTheme.subtitle1,
                 children: <TextSpan>[
                   TextSpan(
-                      text: setting.value?.defaultCurrency,
+                      text: SettingsRepository_.setting.value?.defaultCurrency,
                       style: TextStyle(
                           fontWeight: FontWeight.w400, fontSize: style != null ? style.fontSize - 4 : Theme.of(context).textTheme.subtitle1.fontSize - 4)),
                 ],
@@ -170,7 +178,10 @@ class Helper {
   }
 
   static String getDistance(double distance, String unit) {
-    String _unit = setting.value.distanceUnit;
+
+    SettingsRepository SettingsRepository_ = new SettingsRepository();
+
+    String _unit = SettingsRepository_.setting.value.distanceUnit;
     if (_unit == 'km') {
       distance *= 1.60934;
     }
@@ -178,8 +189,11 @@ class Helper {
   }
 
   static bool canDelivery(Restaurant _restaurant, {List<Cart> carts}) {
+
+    SettingsRepository SettingsRepository_ = new SettingsRepository();
+
     bool _can = true;
-    String _unit = setting.value.distanceUnit;
+    String _unit = SettingsRepository_.setting.value.distanceUnit;
     double _deliveryRange = _restaurant.deliveryRange;
     carts?.forEach((Cart _cart) {
       _can &= _cart.food.deliverable;
@@ -188,7 +202,7 @@ class Helper {
     if (_unit == 'km') {
       _deliveryRange /= 1.60934;
     }
-    _can &= _restaurant.availableForDelivery && (_restaurant.distance <= _deliveryRange) && !deliveryAddress.value.isUnknown();
+    _can &= _restaurant.availableForDelivery && (_restaurant.distance <= _deliveryRange) && !SettingsRepository_.deliveryAddress.value.isUnknown();
     return _can;
   }
 

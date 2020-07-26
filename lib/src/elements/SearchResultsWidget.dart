@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/search_controller.dart';
+import '../controllers/SearchController.dart';
 import '../elements/CardWidget.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/FoodItemWidget.dart';

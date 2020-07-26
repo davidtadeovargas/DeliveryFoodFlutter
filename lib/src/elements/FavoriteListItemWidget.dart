@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
-import '../models/favorite.dart';
+import '../models/Favorite.dart';
 import '../models/route_argument.dart';
 
 // ignore: must_be_immutable

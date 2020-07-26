@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
 import '../models/Order.dart';
-import '../models/food_order.dart';
+import '../models/FoodOrder.dart';
 import '../models/route_argument.dart';
 
 class FoodOrderItemWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/favorite.dart';
+import '../models/Favorite.dart';
 import '../models/route_argument.dart';
 
 class FavoriteGridItemWidget extends StatelessWidget {

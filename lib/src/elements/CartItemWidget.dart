@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/pages/buttons.dart';
 
 import '../helpers/helper.dart';
-import '../models/cart.dart';
+import '../models/Cart.dart';
 import '../models/route_argument.dart';
 
 // ignore: must_be_immutable

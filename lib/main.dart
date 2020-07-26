@@ -7,8 +7,8 @@ import 'route_generator.dart';
 import 'src/helpers/app_config.dart' as config;
 import 'src/helpers/custom_trace.dart';
 import 'src/models/setting.dart';
-import 'src/repository/settings_repository.dart' as settingRepo;
-import 'src/repository/user_repository.dart' as userRepo;
+import 'src/repository/SettingsRepository.dart';
+import 'src/repository/UserRepository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,22 +24,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  UserRepository UserRepository_ = new UserRepository();
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
+
   @override
   void initState() {
-    settingRepo.initSettings();
-    settingRepo.getCurrentLocation();
-    userRepo.getCurrentUser();
+    SettingsRepository_.initSettings();
+    SettingsRepository_.getCurrentLocation();
+    UserRepository_.getCurrentUser();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: settingRepo.setting,
+        valueListenable: SettingsRepository_.setting,
         builder: (context, Setting _setting, _) {
           print(CustomTrace(StackTrace.current, message: _setting.toMap().toString()));
           return MaterialApp(
-              navigatorKey: settingRepo.navigatorKey,
+              navigatorKey: SettingsRepository_.navigatorKey,
               title: _setting.appName,
               initialRoute: '/Splash',
               onGenerateRoute: RouteGenerator.generateRoute,

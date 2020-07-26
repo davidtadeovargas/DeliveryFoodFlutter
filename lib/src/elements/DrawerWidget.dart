@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/profile_controller.dart';
-import '../repository/settings_repository.dart';
-import '../repository/user_repository.dart';
+import '../controllers/ProfileController.dart';
+import '../repository/SettingsRepository.dart';
+import '../repository/UserRepository.dart';
 
 class DrawerWidget extends StatefulWidget {
   @override
@@ -13,6 +13,9 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends StateMVC<DrawerWidget> {
   //ProfileController _con;
+
+  UserRepository UserRepository_ = new UserRepository();
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
 
   _DrawerWidgetState() : super(ProfileController()) {
     //_con = controller;
@@ -29,24 +32,24 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              currentUser.value.apiToken != null ? Navigator.of(context).pushNamed('/Profile') : Navigator.of(context).pushNamed('/Login');
+              UserRepository_.currentUser.value.apiToken != null ? Navigator.of(context).pushNamed('/Profile') : Navigator.of(context).pushNamed('/Login');
             },
-            child: currentUser.value.apiToken != null
+            child: UserRepository_.currentUser.value.apiToken != null
                 ? UserAccountsDrawerHeader(
                     decoration: BoxDecoration(
                       color: Theme.of(context).hintColor.withOpacity(0.1),
                     ),
                     accountName: Text(
-                      currentUser.value.name,
+                      UserRepository_.currentUser.value.name,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     accountEmail: Text(
-                      currentUser.value.email,
+                      UserRepository_.currentUser.value.email,
                       style: Theme.of(context).textTheme.caption,
                     ),
                     currentAccountPicture: CircleAvatar(
                       backgroundColor: Theme.of(context).accentColor,
-                      backgroundImage: NetworkImage(currentUser.value.image.thumb),
+                      backgroundImage: NetworkImage(UserRepository_.currentUser.value.image.thumb),
                     ),
                   )
                 : Container(
@@ -148,7 +151,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              if (currentUser.value.apiToken != null) {
+              if (UserRepository_.currentUser.value.apiToken != null) {
                 Navigator.of(context).pushNamed('/Settings');
               } else {
                 Navigator.of(context).pushReplacementNamed('/Login');
@@ -179,13 +182,13 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ListTile(
             onTap: () {
               if (Theme.of(context).brightness == Brightness.dark) {
-                setBrightness(Brightness.light);
-                setting.value.brightness.value = Brightness.light;
+                SettingsRepository_.setBrightness(Brightness.light);
+                SettingsRepository_.setting.value.brightness.value = Brightness.light;
               } else {
-                setting.value.brightness.value = Brightness.dark;
-                setBrightness(Brightness.dark);
+                SettingsRepository_.setting.value.brightness.value = Brightness.dark;
+                SettingsRepository_.setBrightness(Brightness.dark);
               }
-              setting.notifyListeners();
+              SettingsRepository_.setting.notifyListeners();
             },
             leading: Icon(
               Icons.brightness_6,
@@ -198,8 +201,8 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              if (currentUser.value.apiToken != null) {
-                logout().then((value) {
+              if (UserRepository_.currentUser.value.apiToken != null) {
+                UserRepository_.logout().then((value) {
                   Navigator.of(context).pushNamedAndRemoveUntil('/Pages', (Route<dynamic> route) => false, arguments: 2);
                 });
               } else {
@@ -211,11 +214,11 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              currentUser.value.apiToken != null ? S.of(context).log_out : S.of(context).login,
+              UserRepository_.currentUser.value.apiToken != null ? S.of(context).log_out : S.of(context).login,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
-          currentUser.value.apiToken == null
+          UserRepository_.currentUser.value.apiToken == null
               ? ListTile(
                   onTap: () {
                     Navigator.of(context).pushNamed('/SignUp');
@@ -230,11 +233,11 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                   ),
                 )
               : SizedBox(height: 0),
-          setting.value.enableVersion
+          SettingsRepository_.setting.value.enableVersion
               ? ListTile(
                   dense: true,
                   title: Text(
-                    S.of(context).version + " " + setting.value.appVersion,
+                    S.of(context).version + " " + SettingsRepository_.setting.value.appVersion,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   trailing: Icon(

@@ -10,13 +10,15 @@ import '../models/credit_card.dart';
 import '../models/Order.dart';
 import '../models/order_status.dart';
 import '../models/payment.dart';
-import '../models/user.dart';
-import '../repository/user_repository.dart' as userRepo;
+import '../models/User.dart';
+import 'UserRepository.dart';
 
 class OrderRepository {
 
+  UserRepository UserRepository_ = new UserRepository();
+  
   Future<Stream<Order>> getOrders() async {
-    User _user = userRepo.currentUser.value;
+    User _user = UserRepository_.currentUser.value;
     if (_user.apiToken == null) {
       return new Stream.value(null);
     }
@@ -33,7 +35,7 @@ class OrderRepository {
   }
 
   Future<Stream<Order>> getOrder(orderId) async {
-    User _user = userRepo.currentUser.value;
+    User _user = UserRepository_.currentUser.value;
     if (_user.apiToken == null) {
       return new Stream.value(null);
     }
@@ -49,7 +51,7 @@ class OrderRepository {
   }
 
   Future<Stream<Order>> getRecentOrders() async {
-    User _user = userRepo.currentUser.value;
+    User _user = UserRepository_.currentUser.value;
     if (_user.apiToken == null) {
       return new Stream.value(null);
     }
@@ -66,7 +68,7 @@ class OrderRepository {
   }
 
   Future<Stream<OrderStatus>> getOrderStatus() async {
-    User _user = userRepo.currentUser.value;
+    User _user = UserRepository_.currentUser.value;
     if (_user.apiToken == null) {
       return new Stream.value(null);
     }
@@ -82,11 +84,11 @@ class OrderRepository {
   }
 
   Future<Order> addOrder(Order order, Payment payment) async {
-    User _user = userRepo.currentUser.value;
+    User _user = UserRepository_.currentUser.value;
     if (_user.apiToken == null) {
       return new Order();
     }
-    CreditCard _creditCard = await userRepo.getCreditCard();
+    CreditCard _creditCard = await UserRepository_.getCreditCard();
     order.user = _user;
     order.payment = payment;
     final String _apiToken = 'api_token=${_user.apiToken}';
@@ -117,7 +119,7 @@ class OrderRepository {
 
     print(params);
 
-    User _user = userRepo.currentUser.value;
+    User _user = UserRepository_.currentUser.value;
     final String _apiToken = 'api_token=${_user.apiToken}';
     final String url = '${GlobalConfiguration().getString('api_base_url')}orders/${order.id}?$_apiToken';
     final client = new http.Client();

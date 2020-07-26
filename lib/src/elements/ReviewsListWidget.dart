@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/ReviewItemWidget.dart';
-import '../models/review.dart';
+import '../models/Review.dart';
 
 // ignore: must_be_immutable
 class ReviewsListWidget extends StatelessWidget {

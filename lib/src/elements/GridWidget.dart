@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../elements/GridItemWidget.dart';
-import '../models/restaurant.dart';
+import '../models/Restaurant.dart';
 
 class GridWidget extends StatelessWidget {
   final List<Restaurant> restaurantsList;

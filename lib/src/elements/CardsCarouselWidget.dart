@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../elements/CardsCarouselLoaderWidget.dart';
-import '../models/restaurant.dart';
+import '../models/Restaurant.dart';
 import '../models/route_argument.dart';
 import 'CardWidget.dart';
 

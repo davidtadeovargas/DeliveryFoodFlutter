@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../helpers/custom_trace.dart';
 import '../models/Step.dart';
-import '../repository/settings_repository.dart';
+import '../repository/SettingsRepository.dart';
 
 class MapsUtil {
   static const BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?";
@@ -18,6 +18,8 @@ class MapsUtil {
 
   factory MapsUtil() => _instance;
   final JsonDecoder _decoder = new JsonDecoder();
+
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
 
   Future<dynamic> get(String url) {
     return http.get(BASE_URL + url).then((http.Response response) {
@@ -52,7 +54,7 @@ class MapsUtil {
   Future<String> getAddressName(LatLng location, String apiKey) async {
     try {
       var endPoint =
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${location?.latitude},${location?.longitude}&language=${setting.value.mobileLanguage.value}&key=$apiKey';
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${location?.latitude},${location?.longitude}&language=${SettingsRepository_.setting.value.mobileLanguage.value}&key=$apiKey';
       var response = jsonDecode((await http.get(endPoint, headers: await LocationUtils.getAppHeaders())).body);
 
       return response['results'][0]['formatted_address'];

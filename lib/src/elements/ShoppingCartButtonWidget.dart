@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../controllers/cart_controller.dart';
+import '../controllers/CartController.dart';
 import '../models/route_argument.dart';
-import '../repository/user_repository.dart';
+import '../repository/UserRepository.dart';
 
 class ShoppingCartButtonWidget extends StatefulWidget {
   const ShoppingCartButtonWidget({
@@ -22,6 +22,8 @@ class ShoppingCartButtonWidget extends StatefulWidget {
 class _ShoppingCartButtonWidgetState extends StateMVC<ShoppingCartButtonWidget> {
   CartController _con;
 
+  UserRepository UserRepository_ = new UserRepository();
+
   _ShoppingCartButtonWidgetState() : super(CartController()) {
     _con = controller;
   }
@@ -36,7 +38,7 @@ class _ShoppingCartButtonWidgetState extends StateMVC<ShoppingCartButtonWidget> 
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        if (currentUser.value.apiToken != null) {
+        if (UserRepository_.currentUser.value.apiToken != null) {
           Navigator.of(context).pushNamed('/Cart', arguments: RouteArgument(param: '/Pages', id: '2'));
         } else {
           Navigator.of(context).pushNamed('/Login');

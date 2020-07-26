@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/pages/LoginWidget.dart';
+import 'package:food_delivery_app/src/pages/LanguagesWidget.dart';
 
 import 'src/models/route_argument.dart';
-import 'src/pages/cart.dart';
-import 'src/pages/category.dart';
-import 'src/pages/checkout.dart';
-import 'src/pages/debug.dart';
-import 'src/pages/delivery_addresses.dart';
+import 'src/pages/CartWidget.dart';
+import 'src/pages/CategoryWidget.dart';
+import 'src/pages/CheckoutWidget.dart';
+import 'src/pages/DebugWidget.dart';
+import 'src/pages/DeliveryAddressesWidget.dart';
 import 'src/pages/delivery_pickup.dart';
-import 'src/pages/details.dart';
-import 'src/pages/food.dart';
-import 'src/pages/forget_password.dart';
-import 'src/pages/help.dart';
-import 'src/pages/languages.dart';
-import 'src/pages/login.dart';
-import 'src/pages/menu_list.dart';
-import 'src/pages/order_success.dart';
-import 'src/pages/pages.dart';
-import 'src/pages/payment_methods.dart';
-import 'src/pages/paypal_payment.dart';
-import 'src/pages/profile.dart';
-import 'src/pages/razorpay_payment.dart';
-import 'src/pages/reviews.dart';
-import 'src/pages/settings.dart';
-import 'src/pages/signup.dart';
-import 'src/pages/splash_screen.dart';
-import 'src/pages/tracking.dart';
+import 'src/pages/DetailsWidget.dart';
+import 'src/pages/FoodWidget.dart';
+import 'src/pages/ForgetPasswordWidget.dart';
+import 'src/pages/HelpWidget.dart';
+import 'src/pages/MenuWidget.dart';
+import 'src/pages/OrderSuccessWidget.dart';
+import 'src/pages/PagesWidget.dart';
+import 'src/pages/PaymentMethodsWidget.dart';
+import 'src/pages/PayPalPaymentWidget.dart';
+import 'src/pages/ProfileWidget.dart';
+import 'src/pages/RazorPayPaymentWidget.dart';
+import 'src/pages/ReviewsWidget.dart';
+import 'src/pages/SettingsWidget.dart';
+import 'src/pages/SignUpWidget.dart';
+import 'src/pages/SplashScreenWidget.dart';
+import 'src/pages/TrackingWidget.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -34,7 +34,7 @@ class RouteGenerator {
       case '/Debug':
         return MaterialPageRoute(builder: (_) => DebugWidget(routeArgument: args as RouteArgument));
       case '/Splash':
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return MaterialPageRoute(builder: (_) => SplashScreenWidget());
       case '/SignUp':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
       case '/MobileVerification':

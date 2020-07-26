@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../elements/CircularLoadingWidget.dart';
-import '../models/gallery.dart';
+import '../models/Gallery.dart';
 
 class GalleryItemWidget extends StatelessWidget {
   final Gallery gallery;

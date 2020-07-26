@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/language.dart';
-import '../repository/settings_repository.dart' as settingRepo;
+import '../repository/SettingsRepository.dart';
 
 class LanguageItemWidget extends StatefulWidget {
   final Language language;
@@ -25,6 +25,8 @@ class _LanguageItemWidgetState extends State<LanguageItemWidget> with SingleTick
   Animation<double> opacityAnimation;
   Animation opacityCheckAnimation;
   bool checked = false;
+
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
 
   @override
   void initState() {
@@ -72,7 +74,7 @@ class _LanguageItemWidgetState extends State<LanguageItemWidget> with SingleTick
         } else {
           animationController.forward();
         }
-        settingRepo.setting.value.mobileLanguage.value = new Locale(widget.language.code, '');
+        SettingsRepository_.setting.value.mobileLanguage.value = new Locale(widget.language.code, '');
         // settingRepo.setting.notifyListeners();
         //settingRepo.locale.notifyListeners();
         //widget.language.selected = !widget.language.selected;

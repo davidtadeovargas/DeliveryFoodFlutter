@@ -5,10 +5,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/delivery_addresses_controller.dart';
+import '../controllers/DeliveryAddressesController.dart';
 import '../helpers/app_config.dart' as config;
 import '../models/address.dart';
-import '../repository/settings_repository.dart';
+import '../repository/SettingsRepository.dart';
 
 class DeliveryAddressBottomSheetWidget extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -20,7 +20,9 @@ class DeliveryAddressBottomSheetWidget extends StatefulWidget {
 }
 
 class _DeliveryAddressBottomSheetWidgetState extends StateMVC<DeliveryAddressBottomSheetWidget> {
+
   DeliveryAddressesController _con;
+  SettingsRepository SettingsRepository_ = new SettingsRepository();
 
   _DeliveryAddressBottomSheetWidgetState() : super(DeliveryAddressesController()) {
     _con = controller;
@@ -48,8 +50,8 @@ class _DeliveryAddressBottomSheetWidgetState extends StateMVC<DeliveryAddressBot
                   onTap: () async {
                     LocationResult result = await showLocationPicker(
                       context,
-                      setting.value.googleMapsKey,
-                      initialCenter: LatLng(deliveryAddress.value?.latitude ?? 0, deliveryAddress.value?.longitude ?? 0),
+                      SettingsRepository_.setting.value.googleMapsKey,
+                      initialCenter: LatLng(SettingsRepository_.deliveryAddress.value?.latitude ?? 0, SettingsRepository_.deliveryAddress.value?.longitude ?? 0),
                       //automaticallyAnimateToCurrentLocation: true,
                       //mapStylePath: 'assets/mapStyle.json',
                       myLocationButtonEnabled: true,

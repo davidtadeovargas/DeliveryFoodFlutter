@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/src/controllers/food_controller.dart';
+import 'package:food_delivery_app/src/controllers/FoodController.dart';
 
 import '../helpers/helper.dart';
-import '../models/extra.dart';
+import '../models/Extra.dart';
 
 class ExtraItemWidget extends StatefulWidget {
   final Extra extra;

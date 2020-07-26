@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../elements/GalleryItemWidget.dart';
-import '../models/gallery.dart';
+import '../models/Gallery.dart';
 
 class ImageThumbCarouselWidget extends StatefulWidget {
   final List<Gallery> galleriesList;
