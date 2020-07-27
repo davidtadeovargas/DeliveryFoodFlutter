@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
 import 'package:food_delivery_app/src/repository/ComandaRepository.dart';
 import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 
 import '../../generated/l10n.dart';
-import '../models/address.dart' as model;
-import '../models/payment_method.dart';
+import '../models/Address.dart' as model;
+import '../models/PaymentMethod.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
 import 'CartController.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 class DeliveryPickupController extends CartController {
 
   GlobalKey<ScaffoldState> scaffoldKey;
   model.Address deliveryAddress;
-  PaymentMethodRepository PaymentMethodRepository_;
-  ComandaRepository ComandaRepository_ = new ComandaRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  UserRepository UserRepository_ = new UserRepository();
+
+  PaymentMethodRepository PaymentMethodRepository_ = RepositoryManager.PaymentMethodRepository_;
+  ComandaRepository ComandaRepository_ = RepositoryManager.ComandaRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
 
   DeliveryPickupController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
     super.listenForCarts();
     listenForDeliveryAddress();
-    print(SettingsRepository_.deliveryAddress.value.toMap());
+    print(AddressJsonParser_.fromModeltoMap(SettingsRepository_.deliveryAddress.value));
   }
 
   void listenForDeliveryAddress() async {

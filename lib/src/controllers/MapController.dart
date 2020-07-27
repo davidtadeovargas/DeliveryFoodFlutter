@@ -1,14 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
 import 'package:food_delivery_app/src/parsers/RestaurantJsonParser.dart';
+import 'package:food_delivery_app/src/repository/AddressRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../helpers/app_config.dart' as config;
 import '../helpers/helper.dart';
 import '../helpers/maps_util.dart';
-import '../models/address.dart';
+import '../models/Address.dart';
 import '../models/Restaurant.dart';
 import '../repository/RestaurantRepository.dart';
 import '../repository/SettingsRepository.dart';
@@ -24,9 +27,12 @@ class MapController extends ControllerMVC {
   MapsUtil mapsUtil = new MapsUtil();
   Completer<GoogleMapController> mapController = Completer();
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  RestaurantRepository RestaurantRepository_ = new RestaurantRepository();
-  RestaurantJsonParser RestaurantJsonParser_ = new RestaurantJsonParser();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  RestaurantRepository RestaurantRepository_ = RepositoryManager.RestaurantRepository_;
+  AddressRepository AddressRepository_ = RepositoryManager.AddressRepository_;
+
+  RestaurantJsonParser RestaurantJsonParser_ = RestaurantJsonParser();
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
 
   void listenForNearRestaurants(Address myLocation, Address areaLocation) async {
     final Stream<Restaurant> stream = await RestaurantRepository_.getNearRestaurants(myLocation, areaLocation);
@@ -46,7 +52,7 @@ class MapController extends ControllerMVC {
     try {
       currentAddress = SettingsRepository_.deliveryAddress.value;
       setState(() {
-        if (currentAddress.isUnknown()) {
+        if (AddressRepository_.isUnknown(currentAddress)) {
           cameraPosition = CameraPosition(
             target: LatLng(40, 3),
             zoom: 4,
@@ -58,7 +64,7 @@ class MapController extends ControllerMVC {
           );
         }
       });
-      if (!currentAddress.isUnknown()) {
+      if (!AddressRepository_.isUnknown(currentAddress)) {
         Helper.getMyPositionMarker(currentAddress.latitude, currentAddress.longitude).then((marker) {
           setState(() {
             allMarkers.add(marker);
@@ -111,7 +117,7 @@ class MapController extends ControllerMVC {
   void getRestaurantsOfArea() async {
     setState(() {
       topRestaurants = <Restaurant>[];
-      Address areaAddress = Address.fromJSON({"latitude": cameraPosition.target.latitude, "longitude": cameraPosition.target.longitude});
+      Address areaAddress = AddressJsonParser_.fromJsonToModel({"latitude": cameraPosition.target.latitude, "longitude": cameraPosition.target.longitude});
       if (cameraPosition != null) {
         listenForNearRestaurants(currentAddress, areaAddress);
       } else {

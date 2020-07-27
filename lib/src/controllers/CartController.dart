@@ -4,6 +4,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/CartRepository.dart';
 import '../repository/UserRepository.dart';
 
@@ -15,8 +17,8 @@ class CartController extends ControllerMVC {
   double subTotal = 0.0;
   double total = 0.0;
   GlobalKey<ScaffoldState> scaffoldKey;
-  CartRepository CartRepository_ = new CartRepository();
-  UserRepository UserRepository_ = new UserRepository();
+  CartRepository CartRepository_ = RepositoryManager.CartRepository_;
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   CartController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

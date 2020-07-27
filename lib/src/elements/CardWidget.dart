@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
 import '../models/Restaurant.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 
 // ignore: must_be_immutable
@@ -12,7 +14,7 @@ class CardWidget extends StatelessWidget {
   Restaurant restaurant;
   String heroTag;
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   CardWidget({Key key, this.restaurant, this.heroTag}) : super(key: key);
   @override

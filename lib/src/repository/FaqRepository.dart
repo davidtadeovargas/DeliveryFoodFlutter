@@ -1,18 +1,23 @@
 import 'dart:convert';
 
+import 'package:food_delivery_app/src/parsers/FaqCategoryJsonParser.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
 import '../helpers/helper.dart';
-import '../models/faq_category.dart';
+import '../models/FaqCategory.dart';
 import '../models/User.dart';
+
+import 'RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class FaqRepository{
 
   Future<Stream<FaqCategory>> getFaqCategories() async {
 
-    UserRepository UserRepository_ = new UserRepository();
+    UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+
+    FaqCategoryJsonParser FaqCategoryJsonParser_ = FaqCategoryJsonParser();
 
     User _user = UserRepository_.currentUser.value;
     final String _apiToken = 'api_token=${_user.apiToken}&';
@@ -27,7 +32,7 @@ class FaqRepository{
         .map((data) => Helper.getData(data))
         .expand((data) => (data as List))
         .map((data) {
-      return FaqCategory.fromJSON(data);
+      return FaqCategoryJsonParser_.fromJsonToModel(data);
     });
   }
 }

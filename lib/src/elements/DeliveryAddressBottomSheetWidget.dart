@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -7,7 +8,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../controllers/DeliveryAddressesController.dart';
 import '../helpers/app_config.dart' as config;
-import '../models/address.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 
 class DeliveryAddressBottomSheetWidget extends StatefulWidget {
@@ -22,7 +24,9 @@ class DeliveryAddressBottomSheetWidget extends StatefulWidget {
 class _DeliveryAddressBottomSheetWidgetState extends StateMVC<DeliveryAddressBottomSheetWidget> {
 
   DeliveryAddressesController _con;
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
 
   _DeliveryAddressBottomSheetWidgetState() : super(DeliveryAddressesController()) {
     _con = controller;
@@ -57,7 +61,7 @@ class _DeliveryAddressBottomSheetWidgetState extends StateMVC<DeliveryAddressBot
                       myLocationButtonEnabled: true,
                       //resultCardAlignment: Alignment.bottomCenter,
                     );
-                    _con.addAddress(new Address.fromJSON({
+                    _con.addAddress(AddressJsonParser_.fromJsonToModel({
                       'address': result.address,
                       'latitude': result.latLng.latitude,
                       'longitude': result.latLng.longitude,

@@ -1,22 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:food_delivery_app/src/parsers/CreditCardJsonParser.dart';
 import 'package:food_delivery_app/src/parsers/OrderJsonParser.dart';
+import 'package:food_delivery_app/src/parsers/OrderStatusJsonParser.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
 import '../helpers/helper.dart';
-import '../models/credit_card.dart';
+import '../models/CreditCard.dart';
 import '../models/Order.dart';
-import '../models/order_status.dart';
-import '../models/payment.dart';
+import '../models/OrderStatus.dart';
+import '../models/Payment.dart';
 import '../models/User.dart';
+
+import 'RepositoryManager.dart';
 import 'UserRepository.dart';
 
 class OrderRepository {
 
-  UserRepository UserRepository_ = new UserRepository();
-  
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+
+  CreditCardJsonParser CreditCardJsonParser_ = CreditCardJsonParser();
+  OrderStatusJsonParser OrderStatusJsonParser_ = OrderStatusJsonParser();
+
   Future<Stream<Order>> getOrders() async {
     User _user = UserRepository_.currentUser.value;
     if (_user.apiToken == null) {
@@ -79,7 +86,7 @@ class OrderRepository {
     final streamedRest = await client.send(http.Request('get', Uri.parse(url)));
 
     return streamedRest.stream.transform(utf8.decoder).transform(json.decoder).map((data) => Helper.getData(data)).expand((data) => (data as List)).map((data) {
-      return OrderStatus.fromJSON(data);
+      return OrderStatusJsonParser_.fromJsonToModel(data);
     });
   }
 
@@ -97,7 +104,7 @@ class OrderRepository {
 
     Map params = new OrderJsonParser().fromModeltoMap(order);
 
-    params.addAll(_creditCard.toMap());
+    params.addAll(CreditCardJsonParser_.fromModeltoMap(_creditCard));
     final response = await client.post(
       url,
       headers: {HttpHeaders.contentTypeHeader: 'application/json'},

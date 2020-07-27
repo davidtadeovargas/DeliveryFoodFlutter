@@ -3,6 +3,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../models/Order.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/OrderRepository.dart';
 
 class ProfileController extends ControllerMVC {
@@ -16,7 +18,7 @@ class ProfileController extends ControllerMVC {
 
   void listenForRecentOrders({String message}) async {
 
-    OrderRepository OrderRepository_ = new OrderRepository();
+    OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
 
     final Stream<Order> stream = await OrderRepository_.getRecentOrders();
     stream.listen((Order _order) {

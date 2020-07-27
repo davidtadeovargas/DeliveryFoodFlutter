@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../helpers/helper.dart';
-import '../models/notification.dart' as model;
+import '../models/Notification.dart' as NotificationL;
 
 class NotificationItemWidget extends StatelessWidget {
-  final model.Notification notification;
+
+  final NotificationL.Notification notification;
 
   NotificationItemWidget({Key key, this.notification}) : super(key: key);
 

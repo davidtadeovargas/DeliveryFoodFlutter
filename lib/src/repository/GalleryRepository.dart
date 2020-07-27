@@ -7,13 +7,15 @@ import 'package:http/http.dart' as http;
 import '../helpers/helper.dart';
 import '../models/Gallery.dart';
 import '../models/User.dart';
+
 import '../repository/UserRepository.dart';
+import 'RepositoryManager.dart';
 
 class GalleryRepository{
 
   Future<Stream<Gallery>> getGalleries(String idRestaurant) async {
 
-    UserRepository UserRepository_ = new UserRepository();
+    UserRepository UserRepository_ = RepositoryManager.UserRepository_;
     GalleryJsonParser GalleryJsonParser_ = new GalleryJsonParser();
 
     User _user = UserRepository_.currentUser.value;

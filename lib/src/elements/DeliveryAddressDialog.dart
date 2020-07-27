@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
 import '../helpers/checkbox_form_field.dart';
-import '../models/address.dart';
+import '../models/Address.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddressDialog {

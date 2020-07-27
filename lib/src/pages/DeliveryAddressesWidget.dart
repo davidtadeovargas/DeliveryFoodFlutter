@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
 import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,9 +11,10 @@ import '../elements/CircularLoadingWidget.dart';
 import '../elements/DeliveryAddressDialog.dart';
 import '../elements/DeliveryAddressesItemWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/address.dart';
-import '../models/route_argument.dart';
+import '../models/Address.dart';
+import '../models/RouteArgument.dart';
 import '../repository/SettingsRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 class DeliveryAddressesWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -26,8 +28,11 @@ class DeliveryAddressesWidget extends StatefulWidget {
 class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
 
   DeliveryAddressesController _con;
-  PaymentMethodRepository PaymentMethodRepository_;
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+
+  PaymentMethodRepository PaymentMethodRepository_ = RepositoryManager.PaymentMethodRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
 
   _DeliveryAddressesWidgetState() : super(DeliveryAddressesController()) {
     _con = controller;
@@ -35,7 +40,7 @@ class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    PaymentMethodRepository_ = new PaymentMethodRepository().instance(context);
+
     return Scaffold(
       key: _con.scaffoldKey,
       appBar: AppBar(
@@ -62,7 +67,7 @@ class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
                   myLocationButtonEnabled: true,
                   //resultCardAlignment: Alignment.bottomCenter,
                 );
-                _con.addAddress(new Address.fromJSON({
+                _con.addAddress(AddressJsonParser_.fromJsonToModel({
                   'address': result.address,
                   'latitude': result.latLng.latitude,
                   'longitude': result.latLng.longitude,

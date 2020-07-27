@@ -11,8 +11,10 @@ import '../elements/FoodGridItemWidget.dart';
 import '../elements/FoodListItemWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
 import '../repository/UserRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 class CategoryWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -29,7 +31,7 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
 
   CategoryController _con;
 
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _CategoryWidgetState() : super(CategoryController()) {
     _con = controller;

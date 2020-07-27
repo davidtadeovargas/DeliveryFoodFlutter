@@ -12,7 +12,9 @@ import '../elements/GalleryCarouselWidget.dart';
 import '../elements/ReviewsListWidget.dart';
 import '../elements/ShoppingCartFloatButtonWidget.dart';
 import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 
 class DetailsWidget extends StatefulWidget {
@@ -29,7 +31,7 @@ class DetailsWidget extends StatefulWidget {
 class _DetailsWidgetState extends StateMVC<DetailsWidget> {
 
   RestaurantController _con;
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   _DetailsWidgetState() : super(RestaurantController()) {
     _con = controller;

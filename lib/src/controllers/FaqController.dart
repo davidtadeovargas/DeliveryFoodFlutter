@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/faq_category.dart';
+import '../models/FaqCategory.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/FaqRepository.dart';
 
 class FaqController extends ControllerMVC {
@@ -10,7 +12,7 @@ class FaqController extends ControllerMVC {
   List<FaqCategory> faqs = <FaqCategory>[];
   GlobalKey<ScaffoldState> scaffoldKey;
 
-  FaqRepository FaqRepository_ = new FaqRepository();
+  FaqRepository FaqRepository_ = RepositoryManager.FaqRepository_;
 
   FaqController() {
     scaffoldKey = new GlobalKey<ScaffoldState>();

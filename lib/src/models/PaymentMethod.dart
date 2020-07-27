@@ -1,7 +1,3 @@
-import 'package:flutter/widgets.dart';
-
-import '../../generated/l10n.dart';
-
 class PaymentMethod {
 
   String id;

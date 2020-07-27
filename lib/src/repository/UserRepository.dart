@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
+import 'package:food_delivery_app/src/parsers/CreditCardJsonParser.dart';
 import 'package:food_delivery_app/src/parsers/UserJsonParser.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
@@ -9,15 +11,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/custom_trace.dart';
 import '../helpers/helper.dart';
-import '../models/address.dart';
-import '../models/credit_card.dart';
+import '../models/Address.dart';
+import '../models/CreditCard.dart';
 import '../models/User.dart';
 
 class UserRepository{
 
-  ValueNotifier<User> currentUser = new ValueNotifier(User());
-  UserJsonParser UserJsonParser_ = new UserJsonParser();
-  UserRepository UserRepository_ = new UserRepository();
+  ValueNotifier<User> currentUser = ValueNotifier(User());
+  UserJsonParser UserJsonParser_ = UserJsonParser();
+  CreditCardJsonParser CreditCardJsonParser_ = CreditCardJsonParser();
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
 
   Future<User> login(User user) async {
     final String url = '${GlobalConfiguration().getString('api_base_url')}login';
@@ -96,7 +99,7 @@ class UserRepository{
   Future<void> setCreditCard(CreditCard creditCard) async {
     if (creditCard != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('credit_card', json.encode(creditCard.toMap()));
+      await prefs.setString('credit_card', json.encode(CreditCardJsonParser_.fromModeltoMap(creditCard)));
     }
   }
 
@@ -118,7 +121,7 @@ class UserRepository{
     CreditCard _creditCard = new CreditCard();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('credit_card')) {
-      _creditCard = CreditCard.fromJSON(json.decode(await prefs.get('credit_card')));
+      _creditCard = CreditCardJsonParser_.fromJsonToModel(json.decode(await prefs.get('credit_card')));
     }
     return _creditCard;
   }
@@ -147,16 +150,16 @@ class UserRepository{
       final streamedRest = await client.send(http.Request('get', Uri.parse(url)));
 
       return streamedRest.stream.transform(utf8.decoder).transform(json.decoder).map((data) => Helper.getData(data)).expand((data) => (data as List)).map((data) {
-        return Address.fromJSON(data);
+        return AddressJsonParser_.fromJsonToModel(data);
       });
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: url));
-      return new Stream.value(new Address.fromJSON({}));
+      return new Stream.value(AddressJsonParser_.fromJsonToModel({}));
     }
   }
 
   Future<Address> addAddress(Address address) async {
-    User _user = UserRepository_.currentUser.value;
+    User _user = currentUser.value;
     final String _apiToken = 'api_token=${_user.apiToken}';
     address.userId = _user.id;
     final String url = '${GlobalConfiguration().getString('api_base_url')}delivery_addresses?$_apiToken';
@@ -165,17 +168,17 @@ class UserRepository{
       final response = await client.post(
         url,
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: json.encode(address.toMap()),
+        body: json.encode(AddressJsonParser_.fromModeltoMap(address)),
       );
-      return Address.fromJSON(json.decode(response.body)['data']);
+      return AddressJsonParser_.fromJsonToModel(json.decode(response.body)['data']);
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: url));
-      return new Address.fromJSON({});
+      return AddressJsonParser_.fromJsonToModel({});
     }
   }
 
   Future<Address> updateAddress(Address address) async {
-    User _user = UserRepository_.currentUser.value;
+    User _user = currentUser.value;
     final String _apiToken = 'api_token=${_user.apiToken}';
     address.userId = _user.id;
     final String url = '${GlobalConfiguration().getString('api_base_url')}delivery_addresses/${address.id}?$_apiToken';
@@ -184,17 +187,17 @@ class UserRepository{
       final response = await client.put(
         url,
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: json.encode(address.toMap()),
+        body: json.encode(AddressJsonParser_.fromModeltoMap(address)),
       );
-      return Address.fromJSON(json.decode(response.body)['data']);
+      return AddressJsonParser_.fromJsonToModel(json.decode(response.body)['data']);
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: url));
-      return new Address.fromJSON({});
+      return AddressJsonParser_.fromJsonToModel({});
     }
   }
 
   Future<Address> removeDeliveryAddress(Address address) async {
-    User _user = UserRepository_.currentUser.value;
+    User _user = currentUser.value;
     final String _apiToken = 'api_token=${_user.apiToken}';
     final String url = '${GlobalConfiguration().getString('api_base_url')}delivery_addresses/${address.id}?$_apiToken';
     final client = new http.Client();
@@ -203,10 +206,10 @@ class UserRepository{
         url,
         headers: {HttpHeaders.contentTypeHeader: 'application/json'},
       );
-      return Address.fromJSON(json.decode(response.body)['data']);
+      return AddressJsonParser_.fromJsonToModel(json.decode(response.body)['data']);
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: url));
-      return new Address.fromJSON({});
+      return AddressJsonParser_.fromJsonToModel({});
     }
   }
 }

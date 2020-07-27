@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../elements/DrawerWidget.dart';
 import '../elements/FilterWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 import '../pages/FavoritesWidget.dart';
 import '../pages/HomeWidget.dart';
 import '../pages/MapWidget.dart';

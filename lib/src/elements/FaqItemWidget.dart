@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
-import '../models/faq.dart';
+import '../models/Faq.dart';
 
 class FaqItemWidget extends StatelessWidget {
   final Faq faq;

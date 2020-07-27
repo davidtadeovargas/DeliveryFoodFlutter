@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:food_delivery_app/src/repository/AddressRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
@@ -58,7 +60,7 @@ class Helper {
   static Future<Marker> getMarker(Map<String, dynamic> res) async {
     final Uint8List markerIcon = await getBytesFromAsset('assets/img/marker.png', 120);
 
-    SettingsRepository SettingsRepository_ = new SettingsRepository();
+    SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
     final Marker marker = Marker(
         markerId: MarkerId(res['id']),
@@ -105,7 +107,7 @@ class Helper {
 
   static Widget getPrice(double myPrice, BuildContext context, {TextStyle style}) {
 
-    SettingsRepository SettingsRepository_ = new SettingsRepository();
+    SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
     if (style != null) {
       style = style.merge(TextStyle(fontSize: style.fontSize + 2));
@@ -179,7 +181,7 @@ class Helper {
 
   static String getDistance(double distance, String unit) {
 
-    SettingsRepository SettingsRepository_ = new SettingsRepository();
+    SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
     String _unit = SettingsRepository_.setting.value.distanceUnit;
     if (_unit == 'km') {
@@ -190,7 +192,8 @@ class Helper {
 
   static bool canDelivery(Restaurant _restaurant, {List<Cart> carts}) {
 
-    SettingsRepository SettingsRepository_ = new SettingsRepository();
+    SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+    AddressRepository AddressRepository_ = RepositoryManager.AddressRepository_;
 
     bool _can = true;
     String _unit = SettingsRepository_.setting.value.distanceUnit;
@@ -202,7 +205,7 @@ class Helper {
     if (_unit == 'km') {
       _deliveryRange /= 1.60934;
     }
-    _can &= _restaurant.availableForDelivery && (_restaurant.distance <= _deliveryRange) && !SettingsRepository_.deliveryAddress.value.isUnknown();
+    _can &= _restaurant.availableForDelivery && (_restaurant.distance <= _deliveryRange) && !AddressRepository_.isUnknown(SettingsRepository_.deliveryAddress.value);
     return _can;
   }
 

@@ -11,6 +11,7 @@ class SplashScreenWidget extends StatefulWidget {
 }
 
 class SplashScreenState extends StateMVC<SplashScreenWidget> {
+
   SplashScreenController _con;
 
   SplashScreenState() : super(SplashScreenController()) {

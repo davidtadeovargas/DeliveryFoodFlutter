@@ -25,6 +25,7 @@ class ExtraItemWidget extends StatefulWidget {
 }
 
 class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProviderStateMixin {
+
   Animation animation;
   AnimationController animationController;
   Animation<double> sizeCheckAnimation;
@@ -34,7 +35,9 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
 
   @override
   void initState() {
+
     super.initState();
+
     animationController = AnimationController(duration: Duration(milliseconds: 350), vsync: this);
     CurvedAnimation curve = CurvedAnimation(parent: animationController, curve: Curves.easeOut);
     animation = Tween(begin: 0.0, end: 60.0).animate(curve)
@@ -57,26 +60,11 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
       ..addListener(() {
         setState(() {});
       });
-
-    if(widget.FoodController_.firstExtra){
-      _forward();
-      widget.FoodController_.firstExtra = false;
-    }
   }
 
   void _reverse(){
 
-    bool rev = false;
-    if(widget.onlyOneSelection){
-
-      if(widget.FoodController_.previousAnimationController!=animationController){
-        widget.FoodController_.resetExtracount();
-        rev = true;
-      }
-    }
-    else{
-      rev = true;
-    }
+    bool rev = true;
 
     if(rev){
       animationController.reverse();
@@ -88,22 +76,6 @@ class _ExtraItemWidgetState extends State<ExtraItemWidget> with SingleTickerProv
 
     animationController.forward();
     widget.extra.checked = true;
-
-    if(widget.onlyOneSelection) {
-      if (widget.FoodController_.getExtracount() == 2) {
-        widget.FoodController_.previousAnimationController.reverse();
-        widget.FoodController_.extra.checked = false;
-        widget.FoodController_.previousAnimationController = null;
-      }
-      else {
-        widget.FoodController_.addExtracount();
-      }
-
-      if(widget.FoodController_.previousAnimationController==null){
-        widget.FoodController_.previousAnimationController = animationController;
-        widget.FoodController_.extra = widget.extra;
-      }
-    }
   }
 
   @override

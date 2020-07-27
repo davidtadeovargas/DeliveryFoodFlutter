@@ -5,6 +5,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
+import 'package:food_delivery_app/src/parsers/SettingsJsonParser.dart';
+import 'RepositoryManager.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -13,14 +16,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/custom_trace.dart';
 import '../helpers/maps_util.dart';
-import '../models/address.dart';
-import '../models/setting.dart';
+import '../models/Address.dart';
+import '../models/Setting.dart';
+import 'AddressRepository.dart';
 
 class SettingsRepository{
 
   ValueNotifier<Setting> setting = new ValueNotifier(new Setting());
   ValueNotifier<Address> deliveryAddress = new ValueNotifier(new Address());
   final navigatorKey = GlobalKey<NavigatorState>();
+
+  SettingsJsonParser SettingsJsonParser_ = SettingsJsonParser();
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
+
+  AddressRepository AddressRepository_ = RepositoryManager.AddressRepository_;
+
+
 //LocationData locationData;
 
   Future<Setting> initSettings() async {
@@ -32,7 +43,7 @@ class SettingsRepository{
         if (json.decode(response.body)['data'] != null) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('settings', json.encode(json.decode(response.body)['data']));
-          _setting = Setting.fromJSON(json.decode(response.body)['data']);
+          _setting = SettingsJsonParser_.fromJsonToModel(json.decode(response.body)['data']);
           if (prefs.containsKey('language')) {
             _setting.mobileLanguage.value = Locale(prefs.get('language'), '');
           }
@@ -46,7 +57,7 @@ class SettingsRepository{
       }
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: url).toString());
-      return Setting.fromJSON({});
+      return SettingsJsonParser_.fromJsonToModel({});
     }
     return setting.value;
   }
@@ -59,7 +70,7 @@ class SettingsRepository{
     location.requestService().then((value) async {
       location.getLocation().then((_locationData) async {
         String _addressName = await mapsUtil.getAddressName(new LatLng(_locationData?.latitude, _locationData?.longitude), setting.value.googleMapsKey);
-        _address = Address.fromJSON({'address': _addressName, 'latitude': _locationData?.latitude, 'longitude': _locationData?.longitude});
+        _address = AddressJsonParser_.fromJsonToModel({'address': _addressName, 'latitude': _locationData?.latitude, 'longitude': _locationData?.longitude});
         await changeCurrentLocation(_address);
         whenDone.complete(_address);
       }).timeout(Duration(seconds: 10), onTimeout: () async {
@@ -74,9 +85,9 @@ class SettingsRepository{
   }
 
   Future<Address> changeCurrentLocation(Address _address) async {
-    if (!_address.isUnknown()) {
+    if (!AddressRepository_.isUnknown(_address)) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('delivery_address', json.encode(_address.toMap()));
+      await prefs.setString('delivery_address', json.encode(AddressJsonParser_.fromModeltoMap(_address)));
     }
     return _address;
   }
@@ -85,11 +96,11 @@ class SettingsRepository{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //await prefs.clear();
     if (prefs.containsKey('delivery_address')) {
-      deliveryAddress.value = Address.fromJSON(json.decode(prefs.getString('delivery_address')));
+      deliveryAddress.value = AddressJsonParser_.fromJsonToModel(json.decode(prefs.getString('delivery_address')));
       return deliveryAddress.value;
     } else {
-      deliveryAddress.value = Address.fromJSON({});
-      return Address.fromJSON({});
+      deliveryAddress.value = AddressJsonParser_.fromJsonToModel({});
+      return AddressJsonParser_.fromJsonToModel({});
     }
   }
 

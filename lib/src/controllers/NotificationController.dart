@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/notification.dart' as model;
+
+import '../models/Notification.dart' as NotificationL;
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/NotificationRepository.dart';
 
 class NotificationController extends ControllerMVC {
 
-  List<model.Notification> notifications = <model.Notification>[];
+  List<NotificationL.Notification> notifications = <NotificationL.Notification>[];
   GlobalKey<ScaffoldState> scaffoldKey;
 
-  NotificationRepository NotificationRepository_ = new NotificationRepository();
+  NotificationRepository NotificationRepository_ = RepositoryManager.NotificationRepository_;
 
   NotificationController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -18,8 +20,8 @@ class NotificationController extends ControllerMVC {
   }
 
   void listenForNotifications({String message}) async {
-    final Stream<model.Notification> stream = await NotificationRepository_.getNotifications();
-    stream.listen((model.Notification _notification) {
+    final Stream<NotificationL.Notification> stream = await NotificationRepository_.getNotifications();
+    stream.listen((NotificationL.Notification _notification) {
       setState(() {
         notifications.add(_notification);
       });

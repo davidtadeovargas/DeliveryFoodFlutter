@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/address.dart' as model;
+import '../models/Address.dart' as model;
 import '../models/Cart.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/CartRepository.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
 
 class DeliveryAddressesController extends ControllerMVC with ChangeNotifier {
+
   List<model.Address> addresses = <model.Address>[];
   GlobalKey<ScaffoldState> scaffoldKey;
   Cart cart;
 
-  UserRepository UserRepository_ = new UserRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  CartRepository CartRepository_ = new CartRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  CartRepository CartRepository_ = RepositoryManager.CartRepository_;
 
   DeliveryAddressesController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

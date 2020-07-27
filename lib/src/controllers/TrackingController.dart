@@ -5,14 +5,17 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
-import '../models/order_status.dart';
+import '../models/OrderStatus.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/OrderRepository.dart';
 
 class TrackingController extends ControllerMVC {
   Order order;
   List<OrderStatus> orderStatus = <OrderStatus>[];
   GlobalKey<ScaffoldState> scaffoldKey;
-  OrderRepository OrderRepository_ = new OrderRepository();
+
+  OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
 
   TrackingController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

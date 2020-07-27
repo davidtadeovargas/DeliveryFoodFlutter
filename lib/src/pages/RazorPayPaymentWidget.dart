@@ -5,7 +5,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../controllers/RazorPayController.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 // ignore: must_be_immutable
 class RazorPayPaymentWidget extends StatefulWidget {

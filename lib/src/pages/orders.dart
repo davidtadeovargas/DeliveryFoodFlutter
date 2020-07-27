@@ -8,6 +8,8 @@ import '../elements/OrderItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class OrdersWidget extends StatefulWidget {
@@ -22,7 +24,7 @@ class OrdersWidget extends StatefulWidget {
 class _OrdersWidgetState extends StateMVC<OrdersWidget> {
 
   OrderController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _OrdersWidgetState() : super(OrderController()) {
     _con = controller;

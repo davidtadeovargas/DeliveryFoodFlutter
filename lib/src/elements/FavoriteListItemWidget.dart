@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
 import '../models/Favorite.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 // ignore: must_be_immutable
 class FavoriteListItemWidget extends StatelessWidget {

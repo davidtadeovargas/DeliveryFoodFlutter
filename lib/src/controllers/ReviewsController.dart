@@ -4,8 +4,10 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../models/Food.dart';
 import '../models/Order.dart';
-import '../models/order_status.dart';
+import '../models/OrderStatus.dart';
 import '../models/Review.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/FoodRepository.dart';
 import '../repository/OrderRepository.dart';
 import '../repository/RestaurantRepository.dart';
@@ -19,9 +21,9 @@ class ReviewsController extends ControllerMVC {
   List<OrderStatus> orderStatus = <OrderStatus>[];
   GlobalKey<ScaffoldState> scaffoldKey;
 
-  FoodRepository FoodRepository_ = new FoodRepository();
-  OrderRepository OrderRepository_ = new OrderRepository();
-  RestaurantRepository RestaurantRepository_ = new RestaurantRepository();
+  FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
+  OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
+  RestaurantRepository RestaurantRepository_ = RepositoryManager.RestaurantRepository_;
 
   ReviewsController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -29,8 +31,6 @@ class ReviewsController extends ControllerMVC {
   }
 
   void listenForOrder({String orderId, String message}) async {
-
-    OrderRepository OrderRepository_ = new OrderRepository();
 
     final Stream<Order> stream = await OrderRepository_.getOrder(orderId);
     stream.listen((Order _order) {

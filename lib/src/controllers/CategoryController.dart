@@ -5,6 +5,8 @@ import '../../generated/l10n.dart';
 import '../models/Cart.dart';
 import '../models/Category.dart';
 import '../models/Food.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/CartRepository.dart';
 import '../repository/CategoryRepository.dart';
 import '../repository/FoodRepository.dart';
@@ -16,9 +18,9 @@ class CategoryController extends ControllerMVC {
   bool loadCart = false;
   List<Cart> carts = [];
 
-  FoodRepository FoodRepository_ = new FoodRepository();
-  CartRepository CartRepository_ = new CartRepository();
-  CategoryRepository CategoryRepository_ = new CategoryRepository();
+  FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
+  CartRepository CartRepository_ = RepositoryManager.CartRepository_;
+  CategoryRepository CategoryRepository_ = RepositoryManager.CategoryRepository_;
 
   CategoryController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

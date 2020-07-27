@@ -9,6 +9,8 @@ import '../elements/FavoriteListItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class FavoritesWidget extends StatefulWidget {
@@ -24,7 +26,7 @@ class _FavoritesWidgetState extends StateMVC<FavoritesWidget> {
   String layout = 'grid';
 
   FavoriteController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _FavoritesWidgetState() : super(FavoriteController()) {
     _con = controller;

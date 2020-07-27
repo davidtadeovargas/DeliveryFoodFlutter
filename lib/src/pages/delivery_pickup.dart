@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/dialogs/PickupCarInformationDialog.dart';
-import 'package:food_delivery_app/src/models/VehiculeInformation.dart';
-import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -15,9 +11,8 @@ import '../elements/NotDeliverableAddressesItemWidget.dart';
 import '../elements/PickUpMethodItemWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
 import '../helpers/helper.dart';
-import '../models/address.dart';
-import '../models/payment_method.dart';
-import '../models/route_argument.dart';
+import '../models/Address.dart';
+import '../models/RouteArgument.dart';
 
 class DeliveryPickupWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -29,6 +24,7 @@ class DeliveryPickupWidget extends StatefulWidget {
 }
 
 class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
+
   DeliveryPickupController _con;
 
   _DeliveryPickupWidgetState() : super(DeliveryPickupController()) {
@@ -41,10 +37,8 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
   @override
   Widget build(BuildContext context) {
 
-    //Init the payment methods repositories
-    if (_con.PaymentMethodRepository_ == null) {
-      _con.PaymentMethodRepository_ = new PaymentMethodRepository().instance(context);
-    }
+    //Initialice list if needed
+    _con.PaymentMethodRepository_.instance(context);
 
     return Scaffold(
       key: _con.scaffoldKey,

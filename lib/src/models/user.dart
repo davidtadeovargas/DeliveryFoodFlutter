@@ -1,4 +1,3 @@
-import '../helpers/custom_trace.dart';
 import '../models/Media.dart';
 
 class User {

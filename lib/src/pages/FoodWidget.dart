@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/elements/RadioButtonWidget.dart';
+import 'package:food_delivery_app/src/models/Extra.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -11,8 +13,11 @@ import '../elements/ExtraItemWidget.dart';
 import '../elements/ReviewsListWidget.dart';
 import '../elements/ShoppingCartFloatButtonWidget.dart';
 import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
+import 'buttons.dart';
 
 // ignore: must_be_immutable
 class FoodWidget extends StatefulWidget {
@@ -29,12 +34,10 @@ class FoodWidget extends StatefulWidget {
   }
 }
 
-enum SingingCharacter { pepinillos, aceitunas }
-
 class _FoodWidgetState extends StateMVC<FoodWidget> {
 
   FoodController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _FoodWidgetState() : super(FoodController()) {
     _con = controller;
@@ -45,6 +48,7 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
     _con.listenForFood(foodId: widget.routeArgument.id);
     _con.listenForCart();
     _con.listenForFavorite(foodId: widget.routeArgument.id);
+
     super.initState();
   }
 
@@ -174,22 +178,6 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
 
                                 Divider(height: 20),
                                 Helper.applyHtml(context, _con.food.description, style: TextStyle(fontSize: 10)),
-                                Divider(height: 20),
-
-                                ListTile(
-                                  dense: true,
-                                  contentPadding: EdgeInsets.symmetric(vertical: 10),
-                                  leading: Icon(
-                                    Icons.radio_button_checked,
-                                    color: Theme.of(context).hintColor,
-                                  ),
-                                  title: Text(
-                                    "Select option",
-                                    style: Theme.of(context).textTheme.subtitle1,
-                                  ),
-                                ),
-
-                                Divider(height: 20),
 
                                 ListTile(
                                   dense: true,
@@ -207,49 +195,102 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                     style: Theme.of(context).textTheme.caption,
                                   ),
                                 ),
-
-
                                 _con.food.extraGroups == null
                                     ? CircularLoadingWidget(height: 100)
                                     : ListView.separated(
                                         padding: EdgeInsets.all(0),
                                         itemBuilder: (context, extraGroupIndex) {
-                                          var extraGroup = _con.food.extraGroups.elementAt(extraGroupIndex);
-                                          return Wrap(
-                                            children: <Widget>[
-                                              ListTile(
-                                                dense: true,
-                                                contentPadding: EdgeInsets.symmetric(vertical: 0),
-                                                leading: Icon(
-                                                  Icons.add_circle_outline,
-                                                  color: Theme.of(context).hintColor,
-                                                ),
-                                                title: Text(
-                                                  extraGroup.name,
-                                                  style: Theme.of(context).textTheme.subtitle1,
-                                                ),
-                                              ),
-                                              ListView.separated(
-                                                padding: EdgeInsets.all(0),
-                                                itemBuilder: (context, extraIndex) {
-                                                  return ExtraItemWidget(
-                                                    extra: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex),
-                                                    onChanged:_con.calculateTotal,
-                                                    showPrice: true,
-                                                    onlyOneSelection: false,
-                                                    FoodController_: _con,
-                                                  );
-                                                },
-                                                separatorBuilder: (context, index) {
-                                                  return SizedBox(height: 20);
-                                                },
-                                                itemCount: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).length,
-                                                primary: false,
-                                                shrinkWrap: true,
-                                              ),
 
-                                            ],
-                                          );
+                                          var extraGroup = _con.food.extraGroups.elementAt(extraGroupIndex);
+
+                                          //If the group is base so
+                                          if(extraGroup.forzed){
+                                            return Wrap(
+                                              children: <Widget>[
+                                                ListTile(
+                                                  dense: true,
+                                                  contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                                  leading: Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Theme.of(context).hintColor,
+                                                  ),
+                                                  title: Text(
+                                                    extraGroup.name,
+                                                    style: Theme.of(context).textTheme.subtitle1,
+                                                  ),
+                                                ),
+                                                ListView.separated(
+                                                  padding: EdgeInsets.all(0),
+                                                  itemBuilder: (context, extraIndex) {
+
+                                                    Extra Extra_ = _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex);
+
+                                                    //Select just the first radiobutton item
+                                                    if(_con.radioButtonGroupValue==null){
+                                                      _con.radioButtonGroupValue = Extra_.id;
+                                                      Extra_.checked = true;
+                                                      _con.ExtraPrevious = Extra_;
+
+                                                      _con.food?.extras?.forEach((extra) {
+                                                      });
+                                                    }
+
+                                                    return RadioButtonWidget(
+                                                      extra: Extra_,
+                                                      onChanged:_con.calculateTotal,
+                                                      showPrice: true,
+                                                      FoodController_: _con,
+                                                      extraIndex: extraIndex,
+                                                    );
+                                                  },
+                                                  separatorBuilder: (context, index) {
+                                                    return SizedBox(height: 20);
+                                                  },
+                                                  itemCount: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).length,
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                ),
+
+                                              ],
+                                            );
+                                          }
+                                          else{ //The group is extra
+                                            return Wrap(
+                                              children: <Widget>[
+                                                ListTile(
+                                                  dense: true,
+                                                  contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                                  leading: Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Theme.of(context).hintColor,
+                                                  ),
+                                                  title: Text(
+                                                    extraGroup.name,
+                                                    style: Theme.of(context).textTheme.subtitle1,
+                                                  ),
+                                                ),
+                                                ListView.separated(
+                                                  padding: EdgeInsets.all(0),
+                                                  itemBuilder: (context, extraIndex) {
+                                                    return ExtraItemWidget(
+                                                      extra: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex),
+                                                      onChanged:_con.calculateTotal,
+                                                      showPrice: true,
+                                                      onlyOneSelection: false,
+                                                      FoodController_: _con,
+                                                    );
+                                                  },
+                                                  separatorBuilder: (context, index) {
+                                                    return SizedBox(height: 20);
+                                                  },
+                                                  itemCount: _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).length,
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                ),
+
+                                              ],
+                                            );
+                                          }
                                         },
                                         separatorBuilder: (context, index) {
                                           return SizedBox(height: 20);

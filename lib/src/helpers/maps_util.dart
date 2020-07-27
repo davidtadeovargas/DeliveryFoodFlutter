@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 
 import '../helpers/custom_trace.dart';
 import '../models/Step.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 
 class MapsUtil {
@@ -19,7 +21,7 @@ class MapsUtil {
   factory MapsUtil() => _instance;
   final JsonDecoder _decoder = new JsonDecoder();
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   Future<dynamic> get(String url) {
     return http.get(BASE_URL + url).then((http.Response response) {

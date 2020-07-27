@@ -6,7 +6,7 @@ import '../controllers/SearchController.dart';
 import '../elements/CardWidget.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/FoodItemWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class SearchResultWidget extends StatefulWidget {
   final String heroTag;

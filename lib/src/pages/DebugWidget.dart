@@ -4,7 +4,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../controllers/FavoriteController.dart';
 import '../elements/CircularLoadingWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class DebugWidget extends StatefulWidget {
   final RouteArgument routeArgument;

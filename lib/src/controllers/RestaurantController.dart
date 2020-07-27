@@ -7,6 +7,8 @@ import '../models/Food.dart';
 import '../models/Gallery.dart';
 import '../models/Restaurant.dart';
 import '../models/Review.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/CategoryRepository.dart';
 import '../repository/FoodRepository.dart';
 import '../repository/GalleryRepository.dart';
@@ -26,11 +28,11 @@ class RestaurantController extends ControllerMVC {
   GlobalKey<ScaffoldState> scaffoldKey;
   String _selectedCategory;
 
-  FoodRepository FoodRepository_ = new FoodRepository();
-  CategoryRepository CategoryRepository_ = new CategoryRepository();
-  GalleryRepository GalleryRepository_ = new GalleryRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  RestaurantRepository RestaurantRepository_ = new RestaurantRepository();
+  FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
+  CategoryRepository CategoryRepository_ = RepositoryManager.CategoryRepository_;
+  GalleryRepository GalleryRepository_ = RepositoryManager.GalleryRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  RestaurantRepository RestaurantRepository_ = RepositoryManager.RestaurantRepository_;
 
 
   RestaurantController() {

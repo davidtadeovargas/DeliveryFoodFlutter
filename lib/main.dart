@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 import 'generated/l10n.dart';
 import 'route_generator.dart';
 import 'src/helpers/app_config.dart' as config;
 import 'src/helpers/custom_trace.dart';
-import 'src/models/setting.dart';
+import 'src/models/Setting.dart';
+import 'src/parsers/SettingsJsonParser.dart';
 import 'src/repository/SettingsRepository.dart';
 import 'src/repository/UserRepository.dart';
 
@@ -25,8 +27,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  UserRepository UserRepository_ = new UserRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   @override
   void initState() {
@@ -38,10 +40,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    SettingsJsonParser SettingsJsonParser_ = new SettingsJsonParser();
+
     return ValueListenableBuilder(
         valueListenable: SettingsRepository_.setting,
         builder: (context, Setting _setting, _) {
-          print(CustomTrace(StackTrace.current, message: _setting.toMap().toString()));
+          print(CustomTrace(StackTrace.current, message: SettingsJsonParser_.fromModeltoMap(_setting).toString()));
           return MaterialApp(
               navigatorKey: SettingsRepository_.navigatorKey,
               title: _setting.appName,

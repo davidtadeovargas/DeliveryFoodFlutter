@@ -10,7 +10,7 @@ import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
 
 import '../models/Category.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class MenuWidget extends StatefulWidget {
   @override

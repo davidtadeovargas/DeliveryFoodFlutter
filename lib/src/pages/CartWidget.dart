@@ -6,7 +6,7 @@ import '../controllers/CartController.dart';
 import '../elements/CartBottomDetailsWidget.dart';
 import '../elements/CartItemWidget.dart';
 import '../elements/EmptyCartWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class CartWidget extends StatefulWidget {
   final RouteArgument routeArgument;

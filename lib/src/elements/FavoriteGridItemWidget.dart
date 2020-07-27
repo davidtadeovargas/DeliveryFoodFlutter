@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/Favorite.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class FavoriteGridItemWidget extends StatelessWidget {
   final String heroTag;

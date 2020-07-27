@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/PaymentMethodListItemWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
+import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
 
 class PaymentMethodsWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -19,13 +21,14 @@ class PaymentMethodsWidget extends StatefulWidget {
 
 class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
 
-  PaymentMethodRepository PaymentMethodRepository_;
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  PaymentMethodRepository PaymentMethodRepository_ = RepositoryManager.PaymentMethodRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   @override
   Widget build(BuildContext context) {
 
-    PaymentMethodRepository_ = new PaymentMethodRepository().instance(context);
+    //Initialice list if needed
+    PaymentMethodRepository_ = PaymentMethodRepository_.instance(context);
 
     if (!SettingsRepository_.setting.value.payPalEnabled)
       PaymentMethodRepository_.paymentsList.removeWhere((element) {

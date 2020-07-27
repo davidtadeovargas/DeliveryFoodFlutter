@@ -1,21 +1,27 @@
 import 'package:food_delivery_app/src/models/Order.dart';
+import 'package:food_delivery_app/src/repository/AddressRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
-import '../models/address.dart';
-import '../models/order_status.dart';
-import '../models/payment.dart';
+import 'AddressJsonParser.dart';
 import 'FoodOrderJsonParser.dart';
 import 'IBaseParser.dart';
+import 'OrderStatusJsonParser.dart';
+import 'PaymentJsonParser.dart';
 import 'UserJsonParser.dart';
 
 
 class OrderJsonParser implements IBaseParser {
 
-  FoodOrderJsonParser FoodOrderJsonParser_  = new FoodOrderJsonParser();
+  FoodOrderJsonParser FoodOrderJsonParser_  = FoodOrderJsonParser();
+  AddressJsonParser AddressJsonParser_ = AddressJsonParser();
+  OrderStatusJsonParser OrderStatusJsonParser_ = OrderStatusJsonParser();
+  PaymentJsonParser PaymentJsonParser_ = PaymentJsonParser();
 
   @override
   Object fromJsonToModel(Map<String, dynamic> jsonMap) {
 
-    UserJsonParser UserJsonParser_ = new UserJsonParser();
+    UserJsonParser UserJsonParser_ = UserJsonParser();
+    AddressJsonParser AddressJsonParser_ = AddressJsonParser();
 
     Order Order_ = new Order();
 
@@ -28,11 +34,11 @@ class OrderJsonParser implements IBaseParser {
     Order_.colorCar = jsonMap['color_car'] != null ? jsonMap['color_car'].toString() : '';
 
     Order_.active = jsonMap['active'] ?? false;
-    Order_.orderStatus = jsonMap['order_status'] != null ? OrderStatus.fromJSON(jsonMap['order_status']) : OrderStatus.fromJSON({});
+    Order_.orderStatus = jsonMap['order_status'] != null ? OrderStatusJsonParser_.fromJsonToModel(jsonMap['order_status']) : OrderStatusJsonParser_.fromJsonToModel({});
     Order_.dateTime = DateTime.parse(jsonMap['updated_at']);
     Order_.user = jsonMap['user'] != null ? UserJsonParser_.fromJsonToModel(jsonMap['user']) : UserJsonParser_.fromJsonToModel({});
-    Order_.deliveryAddress = jsonMap['delivery_address'] != null ? Address.fromJSON(jsonMap['delivery_address']) : Address.fromJSON({});
-    Order_.payment = jsonMap['payment'] != null ? Payment.fromJSON(jsonMap['payment']) : Payment.fromJSON({});
+    Order_.deliveryAddress = jsonMap['delivery_address'] != null ? AddressJsonParser_.fromJsonToModel(jsonMap['delivery_address']) : AddressJsonParser_.fromJsonToModel({});
+    Order_.payment = jsonMap['payment'] != null ? PaymentJsonParser_.fromJsonToModel(jsonMap['payment']) : PaymentJsonParser_.fromJsonToModel({});
     Order_.foodOrders = jsonMap['food_orders'] != null ? List.from(jsonMap['food_orders']).map((element) => FoodOrderJsonParser_.fromJsonToModel(element)).toList() : [];
 
     return Order_;
@@ -40,6 +46,8 @@ class OrderJsonParser implements IBaseParser {
 
   @override
   Map fromModeltoMap(Object Object) {
+
+    AddressRepository AddressRepository_ = RepositoryManager.AddressRepository_;
 
     //Cast the model
     Order Order_ = Object;
@@ -54,8 +62,8 @@ class OrderJsonParser implements IBaseParser {
     map["places_car"] = Order_.placesCar;
     map["color_car"] = Order_.colorCar;
     map["foods"] = Order_.foodOrders.map((element) => FoodOrderJsonParser_.fromModeltoMap(element)).toList();
-    map["payment"] = Order_.payment?.toMap();
-    if (!Order_.deliveryAddress.isUnknown()) {
+    map["payment"] = PaymentJsonParser_.fromModeltoMap(Order_.payment);
+    if (!AddressRepository_.isUnknown(Order_.deliveryAddress)) {
       map["delivery_address_id"] = Order_.deliveryAddress?.id;
     }
     return map;

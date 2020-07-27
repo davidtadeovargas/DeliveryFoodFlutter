@@ -6,6 +6,8 @@ import '../models/Category.dart';
 import '../models/Food.dart';
 import '../models/Restaurant.dart';
 import '../models/Review.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/CategoryRepository.dart';
 import '../repository/FoodRepository.dart';
 import '../repository/RestaurantRepository.dart';
@@ -19,10 +21,10 @@ class HomeController extends ControllerMVC {
   List<Review> recentReviews = <Review>[];
   List<Food> trendingFoods = <Food>[];
 
-  CategoryRepository CategoryRepository_ = new CategoryRepository();
-  FoodRepository FoodRepository_ = new FoodRepository();
-  RestaurantRepository RestaurantRepository_ = new RestaurantRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  CategoryRepository CategoryRepository_ = RepositoryManager.CategoryRepository_;
+  FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
+  RestaurantRepository RestaurantRepository_ = RepositoryManager.RestaurantRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   HomeController() {
     listenForTopRestaurants();

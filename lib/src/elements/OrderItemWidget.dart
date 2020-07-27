@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/models/Order.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:food_delivery_app/src/repository/OrderRepository.dart';
+
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 import 'FoodOrderItemWidget.dart';
 
 class OrderItemWidget extends StatefulWidget {
+
   final bool expanded;
   final Order order;
   final ValueChanged<void> onCanceled;
@@ -20,6 +24,9 @@ class OrderItemWidget extends StatefulWidget {
 }
 
 class _OrderItemWidgetState extends State<OrderItemWidget> {
+
+  OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
@@ -132,7 +139,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 0),
                     ),
-                    if (new OrderRepository().canCancelOrder(widget.order))
+                    if (OrderRepository_.canCancelOrder(widget.order))
                       FlatButton(
                         onPressed: () {
                           showDialog(

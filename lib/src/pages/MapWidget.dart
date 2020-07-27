@@ -7,7 +7,7 @@ import '../controllers/MapController.dart';
 import '../elements/CardsCarouselWidget.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../models/Restaurant.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class MapWidget extends StatefulWidget {
   final RouteArgument routeArgument;

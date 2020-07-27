@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:food_delivery_app/src/models/categoria.dart';
+import 'package:food_delivery_app/src/models/Categoria.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -11,7 +11,7 @@ import '../elements/FoodItemWidget.dart';
 import '../elements/FoodsCarouselWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class MenuWidget extends StatefulWidget {
   @override

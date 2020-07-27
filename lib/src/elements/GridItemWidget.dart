@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
 import '../models/Restaurant.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class GridItemWidget extends StatelessWidget {
   final Restaurant restaurant;

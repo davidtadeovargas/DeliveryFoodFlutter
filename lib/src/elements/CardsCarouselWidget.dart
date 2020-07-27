@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../elements/CardsCarouselLoaderWidget.dart';
 import '../models/Restaurant.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 import 'CardWidget.dart';
 
 // ignore: must_be_immutable

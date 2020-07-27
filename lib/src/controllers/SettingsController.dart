@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/credit_card.dart';
+import '../models/CreditCard.dart';
 import '../models/User.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class SettingsController extends ControllerMVC {
@@ -12,7 +14,7 @@ class SettingsController extends ControllerMVC {
   GlobalKey<FormState> loginFormKey;
   GlobalKey<ScaffoldState> scaffoldKey;
 
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   SettingsController() {
     loginFormKey = new GlobalKey<FormState>();

@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -17,8 +18,8 @@ class SplashScreenController extends ControllerMVC {
   GlobalKey<ScaffoldState> scaffoldKey;
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
-  UserRepository UserRepository_ = new UserRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   SplashScreenController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
 import '../models/Food.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class FoodItemWidget extends StatelessWidget {
   final String heroTag;

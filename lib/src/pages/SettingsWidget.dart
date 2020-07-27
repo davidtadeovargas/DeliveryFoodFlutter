@@ -8,6 +8,8 @@ import '../elements/PaymentSettingsDialog.dart';
 import '../elements/ProfileSettingsDialog.dart';
 import '../elements/SearchBarWidget.dart';
 import '../helpers/helper.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -18,7 +20,7 @@ class SettingsWidget extends StatefulWidget {
 class _SettingsWidgetState extends StateMVC<SettingsWidget> {
 
   SettingsController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _SettingsWidgetState() : super(SettingsController()) {
     _con = controller;

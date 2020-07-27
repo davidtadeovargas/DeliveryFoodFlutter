@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
-import '../models/address.dart' as model;
-import '../models/payment_method.dart';
+import '../models/Address.dart' as model;
+import '../models/PaymentMethod.dart';
 
 // ignore: must_be_immutable
 class DeliveryAddressesItemWidget extends StatelessWidget {

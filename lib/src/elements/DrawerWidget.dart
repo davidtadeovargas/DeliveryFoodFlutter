@@ -3,6 +3,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../controllers/ProfileController.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
 
@@ -14,8 +16,8 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends StateMVC<DrawerWidget> {
   //ProfileController _con;
 
-  UserRepository UserRepository_ = new UserRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   _DrawerWidgetState() : super(ProfileController()) {
     //_con = controller;

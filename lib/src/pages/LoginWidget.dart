@@ -5,6 +5,8 @@ import '../../generated/l10n.dart';
 import '../controllers/UserController.dart';
 import '../elements/BlockButtonWidget.dart';
 import '../helpers/app_config.dart' as config;
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -15,7 +17,7 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends StateMVC<LoginWidget> {
 
   UserController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _LoginWidgetState() : super(UserController()) {
     _con = controller;

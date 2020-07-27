@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/language.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 
 class LanguageItemWidget extends StatefulWidget {
@@ -26,7 +28,7 @@ class _LanguageItemWidgetState extends State<LanguageItemWidget> with SingleTick
   Animation opacityCheckAnimation;
   bool checked = false;
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   @override
   void initState() {

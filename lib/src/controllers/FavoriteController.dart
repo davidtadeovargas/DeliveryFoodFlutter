@@ -3,6 +3,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../models/Favorite.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/FoodRepository.dart';
 
 class FavoriteController extends ControllerMVC {
@@ -10,7 +12,7 @@ class FavoriteController extends ControllerMVC {
   List<Favorite> favorites = <Favorite>[];
   GlobalKey<ScaffoldState> scaffoldKey;
 
-  FoodRepository FoodRepository_ = new FoodRepository();
+  FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
 
 
   FavoriteController() {

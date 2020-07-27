@@ -6,7 +6,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../controllers/ReviewsController.dart';
 import '../elements/CircularLoadingWidget.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 
 class ReviewsWidget extends StatefulWidget {
   final RouteArgument routeArgument;

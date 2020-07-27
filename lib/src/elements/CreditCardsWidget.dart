@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
 import '../elements/PaymentSettingsDialog.dart';
 import '../helpers/helper.dart';
-import '../models/credit_card.dart';
+import '../models/CreditCard.dart';
 
 // ignore: must_be_immutable
 class CreditCardsWidget extends StatelessWidget {

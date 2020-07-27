@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
-import '../models/credit_card.dart';
+import '../models/CreditCard.dart';
 
 // ignore: must_be_immutable
 class PaymentSettingsDialog extends StatefulWidget {

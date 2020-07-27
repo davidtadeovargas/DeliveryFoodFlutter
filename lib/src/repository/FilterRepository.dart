@@ -1,14 +1,4 @@
-import 'dart:convert';
-
 import 'package:food_delivery_app/src/models/Filter.dart';
-import 'package:food_delivery_app/src/parsers/GalleryJsonParser.dart';
-import 'package:global_configuration/global_configuration.dart';
-import 'package:http/http.dart' as http;
-
-import '../helpers/helper.dart';
-import '../models/Gallery.dart';
-import '../models/User.dart';
-import '../repository/UserRepository.dart';
 
 class FilterRepository{
 

@@ -5,8 +5,8 @@ import '../../generated/l10n.dart';
 import '../controllers/CheckoutController.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../helpers/helper.dart';
-import '../models/payment.dart';
-import '../models/route_argument.dart';
+import '../models/Payment.dart';
+import '../models/RouteArgument.dart';
 
 class OrderSuccessWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -27,7 +27,8 @@ class _OrderSuccessWidgetState extends StateMVC<OrderSuccessWidget> {
   @override
   void initState() {
     // route param contains the payment method
-    _con.payment = new Payment(widget.routeArgument.param);
+    _con.payment = new Payment();
+    _con.payment.method = widget.routeArgument.param;
     _con.listenForCarts();
     super.initState();
   }

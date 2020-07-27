@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:food_delivery_app/src/models/payment_method.dart';
+import 'package:food_delivery_app/src/models/PaymentMethod.dart';
 
 import '../../generated/l10n.dart';
 

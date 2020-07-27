@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/src/repository/SettingsRepository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -12,6 +11,8 @@ import '../elements/GridWidget.dart';
 import '../elements/ReviewsListWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
 
@@ -27,8 +28,8 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends StateMVC<HomeWidget> {
 
   HomeController _con;
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  UserRepository UserRepository_ = new UserRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _HomeWidgetState() : super(HomeController()) {
     _con = controller;

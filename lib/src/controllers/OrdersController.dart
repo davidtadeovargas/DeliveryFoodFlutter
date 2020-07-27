@@ -3,12 +3,16 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../models/Order.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/OrderRepository.dart';
 
 class OrderController extends ControllerMVC {
+
   List<Order> orders = <Order>[];
   GlobalKey<ScaffoldState> scaffoldKey;
-  OrderRepository OrderRepository_ = new OrderRepository();
+
+  OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
 
   OrderController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

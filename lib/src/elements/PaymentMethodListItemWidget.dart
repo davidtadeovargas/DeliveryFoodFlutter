@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/custom_trace.dart';
-import '../models/payment_method.dart';
+import '../models/PaymentMethod.dart';
 
 // ignore: must_be_immutable
 class PaymentMethodListItemWidget extends StatelessWidget {

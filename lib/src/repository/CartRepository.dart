@@ -10,11 +10,14 @@ import '../helpers/custom_trace.dart';
 import '../helpers/helper.dart';
 import '../models/Cart.dart';
 import '../models/User.dart';
+
+import 'RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class CartRepository{
 
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+
   CartJsonParser CartJsonParser_ = new CartJsonParser();
 
   Future<Stream<Cart>> getCart() async {

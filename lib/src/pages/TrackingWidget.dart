@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/src/repository/OrderRepository.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -10,7 +9,10 @@ import '../elements/CircularLoadingWidget.dart';
 import '../elements/FoodOrderItemWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
 import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
+import 'package:food_delivery_app/src/repository/OrderRepository.dart';
 
 class TrackingWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -22,9 +24,12 @@ class TrackingWidget extends StatefulWidget {
 }
 
 class _TrackingWidgetState extends StateMVC<TrackingWidget> with SingleTickerProviderStateMixin {
+
   TrackingController _con;
   TabController _tabController;
   int _tabIndex = 0;
+
+  OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
 
   _TrackingWidgetState() : super(TrackingController()) {
     _con = controller;
@@ -244,7 +249,7 @@ class _TrackingWidgetState extends StateMVC<TrackingWidget> with SingleTickerPro
                                     child: Wrap(
                                       alignment: WrapAlignment.end,
                                       children: <Widget>[
-                                        if (new OrderRepository().canCancelOrder(_con.order))
+                                        if (OrderRepository_.canCancelOrder(_con.order))
                                           FlatButton(
                                             onPressed: () {
                                               showDialog(

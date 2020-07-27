@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/src/repository/SettingsRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
 import '../models/language.dart';
 import '../repository/SettingsRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 class LanguagesWidget extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class LanguagesWidget extends StatefulWidget {
 class _LanguagesWidgetState extends State<LanguagesWidget> {
 
   LanguagesList languagesList;
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   @override
   void initState() {

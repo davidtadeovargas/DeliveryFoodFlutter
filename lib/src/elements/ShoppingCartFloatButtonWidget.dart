@@ -3,7 +3,9 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../controllers/CartController.dart';
 import '../models/Food.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class ShoppingCartFloatButtonWidget extends StatefulWidget {
@@ -25,7 +27,7 @@ class ShoppingCartFloatButtonWidget extends StatefulWidget {
 class _ShoppingCartFloatButtonWidgetState extends StateMVC<ShoppingCartFloatButtonWidget> {
   CartController _con;
 
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _ShoppingCartFloatButtonWidgetState() : super(CartController()) {
     _con = controller;

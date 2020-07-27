@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 
 class App {
@@ -38,7 +40,7 @@ class App {
 
 class Colors {
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   Color mainColor(double opacity) {
     try {

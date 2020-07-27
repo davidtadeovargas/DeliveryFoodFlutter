@@ -10,6 +10,8 @@ import '../../generated/l10n.dart';
 import '../models/Cart.dart';
 import '../models/Cuisine.dart';
 import '../models/Filter.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/CuisineRepository.dart';
 
 class FilterController extends ControllerMVC {
@@ -19,7 +21,8 @@ class FilterController extends ControllerMVC {
   Filter filter;
   Cart cart;
 
-  CuisineRepository CuisineRepository_ = new CuisineRepository();
+  CuisineRepository CuisineRepository_ = RepositoryManager.CuisineRepository_;
+
   FilterJsonParser FilterJsonParser_ = new FilterJsonParser();
   CuisineJsonParser CuisineJsonParser_ = new CuisineJsonParser();
 

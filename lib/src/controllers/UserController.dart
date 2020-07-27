@@ -5,6 +5,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
 import '../models/User.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class UserController extends ControllerMVC {
@@ -17,7 +19,7 @@ class UserController extends ControllerMVC {
   FirebaseMessaging _firebaseMessaging;
   OverlayEntry loader;
 
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
 
   UserController() {

@@ -1,8 +1,10 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../models/address.dart';
+import '../models/Address.dart';
 import '../models/Food.dart';
 import '../models/Restaurant.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/FoodRepository.dart';
 import '../repository/RestaurantRepository.dart';
 import '../repository/SearchRepository.dart';
@@ -13,10 +15,10 @@ class SearchController extends ControllerMVC {
   List<Restaurant> restaurants = <Restaurant>[];
   List<Food> foods = <Food>[];
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  FoodRepository FoodRepository_ = new FoodRepository();
-  RestaurantRepository RestaurantRepository_ = new RestaurantRepository();
-  SearchRepository SearchRepository_ = new SearchRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
+  RestaurantRepository RestaurantRepository_ = RepositoryManager.RestaurantRepository_;
+  SearchRepository SearchRepository_ = RepositoryManager.SearchRepository_;
 
   SearchController() {
     listenForRestaurants();

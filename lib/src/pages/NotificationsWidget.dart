@@ -7,9 +7,12 @@ import '../elements/EmptyNotificationsWidget.dart';
 import '../elements/NotificationItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class NotificationsWidget extends StatefulWidget {
+
   final GlobalKey<ScaffoldState> parentScaffoldKey;
 
   NotificationsWidget({Key key, this.parentScaffoldKey}) : super(key: key);
@@ -20,7 +23,7 @@ class NotificationsWidget extends StatefulWidget {
 class _NotificationsWidgetState extends StateMVC<NotificationsWidget> {
 
   NotificationController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _NotificationsWidgetState() : super(NotificationController()) {
     _con = controller;

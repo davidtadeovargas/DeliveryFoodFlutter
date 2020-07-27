@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/pages/LoginWidget.dart';
 import 'package:food_delivery_app/src/pages/LanguagesWidget.dart';
 
-import 'src/models/route_argument.dart';
+import 'src/models/RouteArgument.dart';
 import 'src/pages/CartWidget.dart';
 import 'src/pages/CategoryWidget.dart';
 import 'src/pages/CheckoutWidget.dart';

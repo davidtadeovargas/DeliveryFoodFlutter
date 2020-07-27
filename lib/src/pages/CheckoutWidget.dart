@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_app/src/repository/CreditCardRepository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -6,8 +7,9 @@ import '../controllers/CheckoutController.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/CreditCardsWidget.dart';
 import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../models/RouteArgument.dart';
 import '../repository/SettingsRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 class CheckoutWidget extends StatefulWidget {
 //  RouteArgument routeArgument;
@@ -17,9 +19,11 @@ class CheckoutWidget extends StatefulWidget {
 }
 
 class _CheckoutWidgetState extends StateMVC<CheckoutWidget> {
+
   CheckoutController _con;
 
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  CreditCardRepository CreditCardRepository_ = RepositoryManager.CreditCardRepository_;
 
   _CheckoutWidgetState() : super(CheckoutController()) {
     _con = controller;
@@ -184,7 +188,7 @@ class _CheckoutWidgetState extends StateMVC<CheckoutWidget> {
                             width: MediaQuery.of(context).size.width - 40,
                             child: FlatButton(
                               onPressed: () {
-                                if (_con.creditCard.validated()) {
+                                if (CreditCardRepository_.validated(_con.creditCard)) {
                                   Navigator.of(context).pushNamed('/OrderSuccess', arguments: new RouteArgument(param: 'Credit Card (Stripe Gateway)'));
                                 } else {
                                   _con.scaffoldKey?.currentState?.showSnackBar(SnackBar(

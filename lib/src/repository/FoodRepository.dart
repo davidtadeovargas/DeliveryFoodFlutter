@@ -5,27 +5,32 @@ import 'package:food_delivery_app/src/parsers/FavoriteJsonParser.dart';
 import 'package:food_delivery_app/src/parsers/FilterJsonParser.dart';
 import 'package:food_delivery_app/src/parsers/FoodJsonParser.dart';
 import 'package:food_delivery_app/src/parsers/ReviewJsonParser.dart';
+import 'RepositoryManager.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/custom_trace.dart';
 import '../helpers/helper.dart';
-import '../models/address.dart';
+import '../models/Address.dart';
 import '../models/Favorite.dart';
 import '../models/Filter.dart';
 import '../models/Food.dart';
 import '../models/Review.dart';
 import '../models/User.dart';
 import '../repository/UserRepository.dart';
+import 'AddressRepository.dart';
 
 class FoodRepository{
 
-  FoodJsonParser FoodJsonParser_ = new FoodJsonParser();
-  FavoriteJsonParser FavoriteJsonParser_ = new FavoriteJsonParser();
-  ReviewJsonParser ReviewJsonParser_ = new ReviewJsonParser();
-  UserRepository UserRepository_ = new UserRepository();
-  FilterJsonParser FilterJsonParser_ = new FilterJsonParser();
+  FoodJsonParser FoodJsonParser_ = FoodJsonParser();
+  FavoriteJsonParser FavoriteJsonParser_ = FavoriteJsonParser();
+  ReviewJsonParser ReviewJsonParser_ = ReviewJsonParser();
+  FilterJsonParser FilterJsonParser_ = FilterJsonParser();
+
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  AddressRepository AddressRepository_ = RepositoryManager.AddressRepository_;
+
 
   Future<Stream<Food>> getTrendingFoods(Address address) async {
     Uri uri = Helper.getUri('api/foods');
@@ -36,7 +41,7 @@ class FoodRepository{
     filter.open = false;
     _queryParams['limit'] = '6';
     _queryParams['trending'] = 'week';
-    if (!address.isUnknown()) {
+    if (!AddressRepository_.isUnknown(address)) {
       _queryParams['myLon'] = address.longitude.toString();
       _queryParams['myLat'] = address.latitude.toString();
       _queryParams['areaLon'] = address.longitude.toString();
@@ -78,7 +83,7 @@ class FoodRepository{
     _queryParams['search'] = 'name:$search;description:$search';
     _queryParams['searchFields'] = 'name:like;description:like';
     _queryParams['limit'] = '5';
-    if (!address.isUnknown()) {
+    if (!AddressRepository_.isUnknown(address)) {
       _queryParams['myLon'] = address.longitude.toString();
       _queryParams['myLat'] = address.latitude.toString();
       _queryParams['areaLon'] = address.longitude.toString();

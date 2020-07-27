@@ -3,7 +3,9 @@ import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../models/address.dart';
+import '../models/Address.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
 
@@ -15,8 +17,8 @@ class PayPalController extends ControllerMVC {
   double progress = 0;
   Address deliveryAddress;
 
-  UserRepository UserRepository_ = new UserRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
 
   PayPalController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();

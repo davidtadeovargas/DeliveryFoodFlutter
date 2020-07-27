@@ -9,6 +9,8 @@ import '../elements/OrderItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/ProfileAvatarWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -22,7 +24,7 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends StateMVC<ProfileWidget> {
 
   ProfileController _con;
-  UserRepository UserRepository_ = new UserRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
 
   _ProfileWidgetState() : super(ProfileController()) {
     _con = controller;

@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:food_delivery_app/src/repository/ComandaRepository.dart';
 import 'package:food_delivery_app/src/repository/OrderRepository.dart';
 
 import '../../generated/l10n.dart';
 import '../models/Cart.dart';
-import '../models/credit_card.dart';
+import '../models/CreditCard.dart';
 import '../models/FoodOrder.dart';
 import '../models/Order.dart';
-import '../models/order_status.dart';
-import '../models/payment.dart';
+import '../models/OrderStatus.dart';
+import '../models/Payment.dart';
+
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/OrderRepository.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
+
 import 'CartController.dart';
 
 class CheckoutController extends CartController {
   Payment payment;
 
-  UserRepository UserRepository_ = new UserRepository();
-  SettingsRepository SettingsRepository_ = new SettingsRepository();
-  OrderRepository OrderRepository_ = new OrderRepository();
+  UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  SettingsRepository SettingsRepository_ = RepositoryManager.SettingsRepository_;
+  OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
 
   double taxAmount = 0.0;
   double deliveryFee = 0.0;
@@ -47,9 +52,8 @@ class CheckoutController extends CartController {
 
   void addOrder(List<Cart> carts) async {
 
-    OrderRepository OrderRepository_ = new OrderRepository();
-
-    ComandaRepository ComandaRepository_ = new ComandaRepository();
+    OrderRepository OrderRepository_ = RepositoryManager.OrderRepository_;
+    ComandaRepository ComandaRepository_ = RepositoryManager.ComandaRepository_;
 
     Order _order = new Order();
     _order.foodOrders = new List<FoodOrder>();
