@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/models/Faq.dart';
 import 'package:food_delivery_app/src/models/FaqCategory.dart';
 
 import 'IBaseParser.dart';
@@ -13,7 +14,7 @@ class FaqCategoryJsonParser implements IBaseParser {
 
     FaqCategory_.id = jsonMap['id'].toString();
     FaqCategory_.name = jsonMap['faqs'] != null ? jsonMap['name'].toString() : '';
-    FaqCategory_.faqs = jsonMap['faqs'] != null ? List.from(jsonMap['faqs']).map((element) => FaqCategoryJsonParser_.fromJsonToModel(element)).toList() : [];
+    FaqCategory_.faqs = jsonMap['faqs'] != null ? List.from(jsonMap['faqs']).map((element) => FaqCategoryJsonParser_.fromJsonToModel(element) as Faq).toList() : [];
 
     return FaqCategory_;
   }

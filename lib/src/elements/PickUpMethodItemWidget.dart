@@ -4,6 +4,7 @@ import '../models/PaymentMethod.dart';
 
 // ignore: must_be_immutable
 class PickUpMethodItem extends StatefulWidget {
+
   PaymentMethod paymentMethod;
   ValueChanged<PaymentMethod> onPressed;
   ValueChanged<PaymentMethod> onChecked;
@@ -15,6 +16,7 @@ class PickUpMethodItem extends StatefulWidget {
 }
 
 class _PickUpMethodItemState extends State<PickUpMethodItem> {
+
   String heroTag;
 
   @override

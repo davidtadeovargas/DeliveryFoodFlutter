@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/models/Cuisine.dart';
 import 'package:food_delivery_app/src/models/Filter.dart';
 
 import 'CuisineJsonParser.dart';
@@ -16,7 +17,7 @@ class FilterJsonParser implements IBaseParser {
     Filter_.open = jsonMap['open'] ?? false;
     Filter_.delivery = jsonMap['delivery'] ?? false;
     Filter_.cuisines = jsonMap['cuisines'] != null && (jsonMap['cuisines'] as List).length > 0
-        ? List.from(jsonMap['cuisines']).map((element) => CuisineJsonParser_.fromJsonToModel(element)).toList()
+        ? List.from(jsonMap['cuisines']).map((element) => CuisineJsonParser_.fromJsonToModel(element) as Cuisine).toList()
         : [];
 
     return Filter_;

@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/models/Extra.dart';
 import 'package:food_delivery_app/src/models/FoodOrder.dart';
 
 import '../models/FoodOrder.dart';
@@ -21,7 +22,7 @@ class FoodOrderJsonParser implements IBaseParser {
     FoodOrder_.quantity = jsonMap['quantity'] != null ? jsonMap['quantity'].toDouble() : 0.0;
     FoodOrder_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
     FoodOrder_.dateTime = DateTime.parse(jsonMap['updated_at']);
-    FoodOrder_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element)).toList() : [];
+    FoodOrder_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : [];
 
     return FoodOrder_;
   }

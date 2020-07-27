@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/parsers/AddressJsonParser.dart';
 import 'package:food_delivery_app/src/repository/ComandaRepository.dart';
 import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 import '../../generated/l10n.dart';
 import '../models/Address.dart' as model;
@@ -9,7 +10,6 @@ import '../models/PaymentMethod.dart';
 import '../repository/SettingsRepository.dart';
 import '../repository/UserRepository.dart';
 import 'CartController.dart';
-import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 
 class DeliveryPickupController extends CartController {
 
@@ -81,6 +81,7 @@ class DeliveryPickupController extends CartController {
   }
 
   void togglePickUp() {
+
     PaymentMethodRepository_.pickupList.forEach((element) {
       if (element != getPickUpMethod()) {
         element.selected = false;

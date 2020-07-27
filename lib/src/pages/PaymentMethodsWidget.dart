@@ -27,9 +27,6 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
   @override
   Widget build(BuildContext context) {
 
-    //Initialice list if needed
-    PaymentMethodRepository_ = PaymentMethodRepository_.instance(context);
-
     if (!SettingsRepository_.setting.value.payPalEnabled)
       PaymentMethodRepository_.paymentsList.removeWhere((element) {
         return element.id == "paypal";

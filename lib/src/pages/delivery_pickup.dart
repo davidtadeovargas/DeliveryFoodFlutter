@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/dialogs/PickupCarInformationDialog.dart';
+import 'package:food_delivery_app/src/repository/PaymentMethodRepository.dart';
+import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -26,19 +28,18 @@ class DeliveryPickupWidget extends StatefulWidget {
 class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
 
   DeliveryPickupController _con;
+  PaymentMethodRepository PaymentMethodRepository_ = RepositoryManager.PaymentMethodRepository_;
 
   _DeliveryPickupWidgetState() : super(DeliveryPickupController()) {
     _con = controller;
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
 
     //Initialice list if needed
-    _con.PaymentMethodRepository_.instance(context);
+    PaymentMethodRepository_.instance(context);
 
     return Scaffold(
       key: _con.scaffoldKey,
@@ -90,6 +91,7 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                   _con.togglePickUp();
                 },
                 onChecked: (paymentMethod){
+
                   PickupCarInformationDialog(
                     onResult: (VehiculeInformation){
                       _con.ComandaRepository_.VehiculeInformation_ = VehiculeInformation;

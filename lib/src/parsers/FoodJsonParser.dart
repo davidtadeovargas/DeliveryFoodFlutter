@@ -47,12 +47,6 @@ class FoodJsonParser implements IBaseParser {
     Food_.category = jsonMap['category'] != null ? CategoryJsonParser_.fromJsonToModel(jsonMap['category']) : CategoryJsonParser_.fromJsonToModel({});
     Food_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
 
-    /*if(jsonMap['extras'] != null && (jsonMap['extras'] as List).length > 0){
-      Set Set_ = List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toSet();
-      List<Extra> extras = Set_.toList();
-      Food_.extras = extras;
-    }*/
-
     Food_.extras = jsonMap['extras'] != null && (jsonMap['extras'] as List).length > 0
         ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toSet().toList()
         : [];

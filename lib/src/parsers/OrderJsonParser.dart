@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/models/FoodOrder.dart';
 import 'package:food_delivery_app/src/models/Order.dart';
 import 'package:food_delivery_app/src/repository/AddressRepository.dart';
 import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
@@ -39,7 +40,7 @@ class OrderJsonParser implements IBaseParser {
     Order_.user = jsonMap['user'] != null ? UserJsonParser_.fromJsonToModel(jsonMap['user']) : UserJsonParser_.fromJsonToModel({});
     Order_.deliveryAddress = jsonMap['delivery_address'] != null ? AddressJsonParser_.fromJsonToModel(jsonMap['delivery_address']) : AddressJsonParser_.fromJsonToModel({});
     Order_.payment = jsonMap['payment'] != null ? PaymentJsonParser_.fromJsonToModel(jsonMap['payment']) : PaymentJsonParser_.fromJsonToModel({});
-    Order_.foodOrders = jsonMap['food_orders'] != null ? List.from(jsonMap['food_orders']).map((element) => FoodOrderJsonParser_.fromJsonToModel(element)).toList() : [];
+    Order_.foodOrders = jsonMap['food_orders'] != null ? List.from(jsonMap['food_orders']).map((element) => FoodOrderJsonParser_.fromJsonToModel(element) as FoodOrder).toList() : [];
 
     return Order_;
   }

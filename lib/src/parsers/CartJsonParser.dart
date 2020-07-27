@@ -1,4 +1,5 @@
 import 'package:food_delivery_app/src/models/Cart.dart';
+import 'package:food_delivery_app/src/models/Extra.dart';
 
 import 'ExtraJsonParser.dart';
 import 'FoodJsonParser.dart';
@@ -18,7 +19,7 @@ class CartJsonParser implements IBaseParser {
     Cart_.id = jsonMap['id'].toString();
     Cart_.quantity = jsonMap['quantity'] != null ? jsonMap['quantity'].toDouble() : 0.0;
     Cart_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
-    Cart_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element)).toList() : [];
+    Cart_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : [];
 
     return Cart_;
   }

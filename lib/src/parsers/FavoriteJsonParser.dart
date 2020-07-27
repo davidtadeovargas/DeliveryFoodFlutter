@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/models/Extra.dart';
 import 'package:food_delivery_app/src/models/Favorite.dart';
 
 import 'ExtraJsonParser.dart';
@@ -16,7 +17,7 @@ class FavoriteJsonParser implements IBaseParser {
 
     Favorite_.id = jsonMap['id'] != null ? jsonMap['id'].toString() : null;
     Favorite_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
-    Favorite_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element)).toList() : null;
+    Favorite_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : null;
 
     return Favorite_;
   }
