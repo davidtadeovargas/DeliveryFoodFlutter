@@ -40,12 +40,15 @@ class MediaJsonParser implements IBaseParser {
     Media Media_ = Object;
 
     var map = new Map<String, dynamic>();
-    map["id"] = Media_.id;
-    map["name"] = Media_.name;
-    map["url"] = Media_.url;
-    map["thumb"] = Media_.thumb;
-    map["icon"] = Media_.icon;
-    map["formated_size"] = Media_.size;
+
+    if(Media_!=null){
+      map["id"] = Media_.id;
+      map["name"] = Media_.name;
+      map["url"] = Media_.url;
+      map["thumb"] = Media_.thumb;
+      map["icon"] = Media_.icon;
+      map["formated_size"] = Media_.size;
+    }
 
     return map;
   }

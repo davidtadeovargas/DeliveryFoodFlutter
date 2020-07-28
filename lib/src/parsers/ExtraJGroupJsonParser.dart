@@ -15,8 +15,8 @@ class ExtraJGroupJsonParser implements IBaseParser {
 
       ExtraGroup_.id = jsonMap['id'].toString();
       ExtraGroup_.name = jsonMap['name'];
-      int forzed_ = jsonMap['forzed'];
-      ExtraGroup_.forzed = forzed_==1;
+      bool forzed_ = jsonMap['forzed'];
+      ExtraGroup_.forzed = forzed_;
 
     }catch(e){
 

@@ -23,19 +23,31 @@ class UserJsonParser implements IBaseParser {
       User_.email = jsonMap['email'] != null ? jsonMap['email'] : '';
       User_.apiToken = jsonMap['api_token'];
       User_.deviceToken = jsonMap['device_token'];
-      User_.phone = jsonMap['custom_fields']['phone']['view'];
-      User_.address = jsonMap['custom_fields']['address']['view'];
-      User_.bio = jsonMap['custom_fields']['bio']['view'];
       User_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
 
     }catch(e){
 
         print(CustomTrace(StackTrace.current, message: e));
 
-        User_.phone = "";
-        User_.address = "";
-        User_.bio = "";
         User_.image = Media();
+    }
+
+    try{
+      User_.phone = jsonMap['custom_fields']['phone']['view'];
+    }catch(e){
+      User_.phone = "";
+    }
+
+    try{
+      User_.address = jsonMap['custom_fields']['address']['view'];
+    }catch(e){
+      User_.address = "";
+    }
+
+    try{
+      User_.bio = jsonMap['custom_fields']['bio']['view'];
+    }catch(e){
+      User_.bio = "";
     }
 
     return User_;
@@ -49,7 +61,7 @@ class UserJsonParser implements IBaseParser {
 
     var map = new Map<String, dynamic>();
 
-    map["id"] = User_.id;
+    map["id"] = User_.id==null?"":User_.id;
     map["email"] = User_.email;
     map["name"] = User_.name;
     map["password"] = User_.password;
