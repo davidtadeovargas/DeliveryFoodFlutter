@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Gallery.dart';
 import 'package:food_delivery_app/src/models/Media.dart';
 
@@ -14,9 +15,20 @@ class GalleryJsonParser implements IBaseParser {
 
     Gallery Gallery_ = new Gallery();
 
-    Gallery_.id = jsonMap['id'].toString();
-    Gallery_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
-    Gallery_.description = jsonMap['description'];
+    try{
+
+      Gallery_.id = jsonMap['id'].toString();
+      Gallery_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
+      Gallery_.description = jsonMap['description'];
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      Gallery_.id = '';
+      Gallery_.image = new Media();
+      Gallery_.description = '';
+    }
 
     return Gallery_;
   }

@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Cuisine.dart';
 import 'package:food_delivery_app/src/models/Media.dart';
 
@@ -14,11 +15,24 @@ class CuisineJsonParser implements IBaseParser {
 
     Cuisine Cuisine_ = new Cuisine();
 
-    Cuisine_.id = jsonMap['id'].toString();
-    Cuisine_.name = jsonMap['name'];
-    Cuisine_.description = jsonMap['description'];
-    Cuisine_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
-    Cuisine_.selected = jsonMap['selected'] ?? false;
+    try{
+
+      Cuisine_.id = jsonMap['id'].toString();
+      Cuisine_.name = jsonMap['name'];
+      Cuisine_.description = jsonMap['description'];
+      Cuisine_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
+      Cuisine_.selected = jsonMap['selected'] ?? false;
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      Cuisine_.id = '';
+      Cuisine_.name = '';
+      Cuisine_.description = '';
+      Cuisine_.image = new Media();
+      Cuisine_.selected = false;
+    }
 
     return Cuisine_;
   }

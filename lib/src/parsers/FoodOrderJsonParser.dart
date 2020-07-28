@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Extra.dart';
 import 'package:food_delivery_app/src/models/FoodOrder.dart';
 
@@ -17,12 +18,28 @@ class FoodOrderJsonParser implements IBaseParser {
 
     FoodOrder FoodOrder_ = new FoodOrder();
 
-    FoodOrder_.id = jsonMap['id'].toString();
-    FoodOrder_.price = jsonMap['price'] != null ? jsonMap['price'].toDouble() : 0.0;
-    FoodOrder_.quantity = jsonMap['quantity'] != null ? jsonMap['quantity'].toDouble() : 0.0;
-    FoodOrder_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
-    FoodOrder_.dateTime = DateTime.parse(jsonMap['updated_at']);
-    FoodOrder_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : [];
+    try{
+
+      FoodOrder_.id = jsonMap['id'].toString();
+      FoodOrder_.price = jsonMap['price'] != null ? jsonMap['price'].toDouble() : 0.0;
+      FoodOrder_.quantity = jsonMap['quantity'] != null ? jsonMap['quantity'].toDouble() : 0.0;
+      FoodOrder_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
+      FoodOrder_.dateTime = DateTime.parse(jsonMap['updated_at']);
+      FoodOrder_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : [];
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      FoodJsonParser FoodJsonParser_ = FoodJsonParser();
+
+      FoodOrder_.id = '';
+      FoodOrder_.price = 0.0;
+      FoodOrder_.quantity = 0.0;
+      FoodOrder_.food = FoodJsonParser_.fromJsonToModel({});
+      FoodOrder_.dateTime = DateTime(0);
+      FoodOrder_.extras = [];
+    }
 
     return FoodOrder_;
   }

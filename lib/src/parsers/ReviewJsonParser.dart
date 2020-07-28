@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Review.dart';
 
 import 'IBaseParser.dart';
@@ -13,10 +14,24 @@ class ReviewJsonParser implements IBaseParser {
 
     Review Review_ = new Review();
 
-    Review_.id = jsonMap['id'].toString();
-    Review_.review = jsonMap['review'];
-    Review_.rate = jsonMap['rate'].toString() ?? '0';
-    Review_.user = jsonMap['user'] != null ? UserJsonParser_.fromJsonToModel(jsonMap['user']) : UserJsonParser_.fromJsonToModel({});
+    try{
+
+      Review_.id = jsonMap['id'].toString();
+      Review_.review = jsonMap['review'];
+      Review_.rate = jsonMap['rate'].toString() ?? '0';
+      Review_.user = jsonMap['user'] != null ? UserJsonParser_.fromJsonToModel(jsonMap['user']) : UserJsonParser_.fromJsonToModel({});
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      UserJsonParser UserJsonParser_ = UserJsonParser();
+
+      Review_.id = '';
+      Review_.review = '';
+      Review_.rate = '0';
+      Review_.user = UserJsonParser_.fromJsonToModel({});
+    }
 
     return Review_;
   }

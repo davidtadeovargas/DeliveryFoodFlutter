@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/FoodOrder.dart';
 import 'package:food_delivery_app/src/models/Order.dart';
 import 'package:food_delivery_app/src/repository/AddressRepository.dart';
@@ -26,21 +27,27 @@ class OrderJsonParser implements IBaseParser {
 
     Order Order_ = new Order();
 
-    Order_.id = jsonMap['id'].toString();
-    Order_.tax = jsonMap['tax'] != null ? jsonMap['tax'].toDouble() : 0.0;
-    Order_.deliveryFee = jsonMap['delivery_fee'] != null ? jsonMap['delivery_fee'].toDouble() : 0.0;
-    Order_.hint = jsonMap['hint'] != null ? jsonMap['hint'].toString() : '';
+    try{
 
-    Order_.placesCar = jsonMap['places_car'] != null ? jsonMap['places_car'].toString() : '';
-    Order_.colorCar = jsonMap['color_car'] != null ? jsonMap['color_car'].toString() : '';
+      Order_.id = jsonMap['id'].toString();
+      Order_.tax = jsonMap['tax'] != null ? jsonMap['tax'].toDouble() : 0.0;
+      Order_.deliveryFee = jsonMap['delivery_fee'] != null ? jsonMap['delivery_fee'].toDouble() : 0.0;
+      Order_.hint = jsonMap['hint'] != null ? jsonMap['hint'].toString() : '';
 
-    Order_.active = jsonMap['active'] ?? false;
-    Order_.orderStatus = jsonMap['order_status'] != null ? OrderStatusJsonParser_.fromJsonToModel(jsonMap['order_status']) : OrderStatusJsonParser_.fromJsonToModel({});
-    Order_.dateTime = DateTime.parse(jsonMap['updated_at']);
-    Order_.user = jsonMap['user'] != null ? UserJsonParser_.fromJsonToModel(jsonMap['user']) : UserJsonParser_.fromJsonToModel({});
-    Order_.deliveryAddress = jsonMap['delivery_address'] != null ? AddressJsonParser_.fromJsonToModel(jsonMap['delivery_address']) : AddressJsonParser_.fromJsonToModel({});
-    Order_.payment = jsonMap['payment'] != null ? PaymentJsonParser_.fromJsonToModel(jsonMap['payment']) : PaymentJsonParser_.fromJsonToModel({});
-    Order_.foodOrders = jsonMap['food_orders'] != null ? List.from(jsonMap['food_orders']).map((element) => FoodOrderJsonParser_.fromJsonToModel(element) as FoodOrder).toList() : [];
+      Order_.placesCar = jsonMap['places_car'] != null ? jsonMap['places_car'].toString() : '';
+      Order_.colorCar = jsonMap['color_car'] != null ? jsonMap['color_car'].toString() : '';
+
+      Order_.active = jsonMap['active'] ?? false;
+      Order_.orderStatus = jsonMap['order_status'] != null ? OrderStatusJsonParser_.fromJsonToModel(jsonMap['order_status']) : OrderStatusJsonParser_.fromJsonToModel({});
+      Order_.dateTime = DateTime.parse(jsonMap['updated_at']);
+      Order_.user = jsonMap['user'] != null ? UserJsonParser_.fromJsonToModel(jsonMap['user']) : UserJsonParser_.fromJsonToModel({});
+      Order_.deliveryAddress = jsonMap['delivery_address'] != null ? AddressJsonParser_.fromJsonToModel(jsonMap['delivery_address']) : AddressJsonParser_.fromJsonToModel({});
+      Order_.payment = jsonMap['payment'] != null ? PaymentJsonParser_.fromJsonToModel(jsonMap['payment']) : PaymentJsonParser_.fromJsonToModel({});
+      Order_.foodOrders = jsonMap['food_orders'] != null ? List.from(jsonMap['food_orders']).map((element) => FoodOrderJsonParser_.fromJsonToModel(element) as FoodOrder).toList() : [];
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return Order_;
   }

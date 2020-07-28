@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Payment.dart';
 
 import 'IBaseParser.dart';
@@ -10,9 +11,15 @@ class PaymentJsonParser implements IBaseParser {
 
     Payment Payment_ = Payment();
 
-    Payment_.id = jsonMap['id'].toString();
-    Payment_.status = jsonMap['status'] ?? '';
-    Payment_.method = jsonMap['method'] ?? '';
+    try{
+
+      Payment_.id = jsonMap['id'].toString();
+      Payment_.status = jsonMap['status'] ?? '';
+      Payment_.method = jsonMap['method'] ?? '';
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return Payment_;
   }

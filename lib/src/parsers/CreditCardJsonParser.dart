@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/CreditCard.dart';
 
 import 'IBaseParser.dart';
@@ -10,11 +11,17 @@ class CreditCardJsonParser implements IBaseParser {
 
     CreditCard CreditCard_ = CreditCard();
 
-    CreditCard_.id = jsonMap['id'].toString();
-    CreditCard_.number = jsonMap['stripe_number'].toString();
-    CreditCard_.expMonth = jsonMap['stripe_exp_month'].toString();
-    CreditCard_.expYear = jsonMap['stripe_exp_year'].toString();
-    CreditCard_.cvc = jsonMap['stripe_cvc'].toString();
+    try{
+
+      CreditCard_.id = jsonMap['id'].toString();
+      CreditCard_.number = jsonMap['stripe_number'].toString();
+      CreditCard_.expMonth = jsonMap['stripe_exp_month'].toString();
+      CreditCard_.expYear = jsonMap['stripe_exp_year'].toString();
+      CreditCard_.cvc = jsonMap['stripe_cvc'].toString();
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return CreditCard_;
   }

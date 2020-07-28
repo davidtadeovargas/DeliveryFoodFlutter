@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Extra.dart';
 import 'package:food_delivery_app/src/models/Media.dart';
 
@@ -14,13 +15,28 @@ class ExtraJsonParser implements IBaseParser {
 
     Extra Extra_ = new Extra();
 
-    Extra_.id = jsonMap['id'].toString();
-    Extra_.extraGroupId = jsonMap['extra_group_id'] != null ? jsonMap['extra_group_id'].toString() : '0';
-    Extra_.name = jsonMap['name'].toString();
-    Extra_.price = jsonMap['price'] != null ? jsonMap['price'].toDouble() : 0;
-    Extra_.description = jsonMap['description'];
-    Extra_.checked = false;
-    Extra_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
+    try{
+
+      Extra_.id = jsonMap['id'].toString();
+      Extra_.extraGroupId = jsonMap['extra_group_id'] != null ? jsonMap['extra_group_id'].toString() : '0';
+      Extra_.name = jsonMap['name'].toString();
+      Extra_.price = jsonMap['price'] != null ? jsonMap['price'].toDouble() : 0;
+      Extra_.description = jsonMap['description'];
+      Extra_.checked = false;
+      Extra_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      Extra_.id = '';
+      Extra_.extraGroupId = '0';
+      Extra_.name = '';
+      Extra_.price = 0.0;
+      Extra_.description = '';
+      Extra_.checked = false;
+      Extra_.image = new Media();
+    }
 
     return Extra_;
   }

@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Extra.dart';
 import 'package:food_delivery_app/src/models/Favorite.dart';
 
@@ -15,9 +16,22 @@ class FavoriteJsonParser implements IBaseParser {
     FoodJsonParser FoodJsonParser_ = new FoodJsonParser();
     ExtraJsonParser ExtraJsonParser_ = new ExtraJsonParser();
 
-    Favorite_.id = jsonMap['id'] != null ? jsonMap['id'].toString() : null;
-    Favorite_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
-    Favorite_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : null;
+    try{
+
+      Favorite_.id = jsonMap['id'] != null ? jsonMap['id'].toString() : null;
+      Favorite_.food = jsonMap['food'] != null ? FoodJsonParser_.fromJsonToModel(jsonMap['food']) : FoodJsonParser_.fromJsonToModel({});
+      Favorite_.extras = jsonMap['extras'] != null ? List.from(jsonMap['extras']).map((element) => ExtraJsonParser_.fromJsonToModel(element) as Extra).toList() : null;
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      FoodJsonParser FoodJsonParser_ = FoodJsonParser();
+
+      Favorite_.id = '';
+      Favorite_.food = FoodJsonParser_.fromJsonToModel({});
+      Favorite_.extras = [];
+    }
 
     return Favorite_;
   }

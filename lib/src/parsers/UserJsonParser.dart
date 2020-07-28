@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Media.dart';
 import 'package:food_delivery_app/src/models/User.dart';
 
@@ -15,27 +16,27 @@ class UserJsonParser implements IBaseParser {
 
     User User_ = new User();
 
-    User_.id = jsonMap['id'].toString();
-    User_.name = jsonMap['name'] != null ? jsonMap['name'] : '';
-    User_.email = jsonMap['email'] != null ? jsonMap['email'] : '';
-    User_.apiToken = jsonMap['api_token'];
-    User_.deviceToken = jsonMap['device_token'];
-    try {
+    try{
+
+      User_.id = jsonMap['id'].toString();
+      User_.name = jsonMap['name'] != null ? jsonMap['name'] : '';
+      User_.email = jsonMap['email'] != null ? jsonMap['email'] : '';
+      User_.apiToken = jsonMap['api_token'];
+      User_.deviceToken = jsonMap['device_token'];
       User_.phone = jsonMap['custom_fields']['phone']['view'];
-    } catch (e) {
-      User_.phone = "";
-    }
-    try {
       User_.address = jsonMap['custom_fields']['address']['view'];
-    } catch (e) {
-      User_.address = "";
-    }
-    try {
       User_.bio = jsonMap['custom_fields']['bio']['view'];
-    } catch (e) {
-      User_.bio = "";
+      User_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
+
+    }catch(e){
+
+        print(CustomTrace(StackTrace.current, message: e));
+
+        User_.phone = "";
+        User_.address = "";
+        User_.bio = "";
+        User_.image = Media();
     }
-    User_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
 
     return User_;
   }

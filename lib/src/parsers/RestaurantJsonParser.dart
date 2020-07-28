@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Media.dart';
 import 'package:food_delivery_app/src/models/Restaurant.dart';
 
@@ -13,24 +14,50 @@ class RestaurantJsonParser implements IBaseParser {
     Restaurant Restaurant_ = new Restaurant();
     MediaJsonParser MediaJsonParser_ = new MediaJsonParser();
 
-    Restaurant_.id = jsonMap['id'].toString();
-    Restaurant_.name = jsonMap['name'];
-    Restaurant_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
-    Restaurant_.rate = jsonMap['rate'] ?? '0';
-    Restaurant_.deliveryFee = jsonMap['delivery_fee'] != null ? jsonMap['delivery_fee'].toDouble() : 0.0;
-    Restaurant_.adminCommission = jsonMap['admin_commission'] != null ? jsonMap['admin_commission'].toDouble() : 0.0;
-    Restaurant_.deliveryRange = jsonMap['delivery_range'] != null ? jsonMap['delivery_range'].toDouble() : 0.0;
-    Restaurant_.address = jsonMap['address'];
-    Restaurant_.description = jsonMap['description'];
-    Restaurant_.phone = jsonMap['phone'];
-    Restaurant_.mobile = jsonMap['mobile'];
-    Restaurant_.defaultTax = jsonMap['default_tax'] != null ? jsonMap['default_tax'].toDouble() : 0.0;
-    Restaurant_.information = jsonMap['information'];
-    Restaurant_.latitude = jsonMap['latitude'];
-    Restaurant_.longitude = jsonMap['longitude'];
-    Restaurant_.closed = jsonMap['closed'] ?? false;
-    Restaurant_.availableForDelivery = jsonMap['available_for_delivery'] ?? false;
-    Restaurant_.distance = jsonMap['distance'] != null ? double.parse(jsonMap['distance'].toString()) : 0.0;
+    try{
+
+      Restaurant_.id = jsonMap['id'].toString();
+      Restaurant_.name = jsonMap['name'];
+      Restaurant_.image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0 ? MediaJsonParser_.fromJsonToModel(jsonMap['media'][0]) : new Media();
+      Restaurant_.rate = jsonMap['rate'] ?? '0';
+      Restaurant_.deliveryFee = jsonMap['delivery_fee'] != null ? jsonMap['delivery_fee'].toDouble() : 0.0;
+      Restaurant_.adminCommission = jsonMap['admin_commission'] != null ? jsonMap['admin_commission'].toDouble() : 0.0;
+      Restaurant_.deliveryRange = jsonMap['delivery_range'] != null ? jsonMap['delivery_range'].toDouble() : 0.0;
+      Restaurant_.address = jsonMap['address'];
+      Restaurant_.description = jsonMap['description'];
+      Restaurant_.phone = jsonMap['phone'];
+      Restaurant_.mobile = jsonMap['mobile'];
+      Restaurant_.defaultTax = jsonMap['default_tax'] != null ? jsonMap['default_tax'].toDouble() : 0.0;
+      Restaurant_.information = jsonMap['information'];
+      Restaurant_.latitude = jsonMap['latitude'];
+      Restaurant_.longitude = jsonMap['longitude'];
+      Restaurant_.closed = jsonMap['closed'] ?? false;
+      Restaurant_.availableForDelivery = jsonMap['available_for_delivery'] ?? false;
+      Restaurant_.distance = jsonMap['distance'] != null ? double.parse(jsonMap['distance'].toString()) : 0.0;
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      Restaurant_.id = '';
+      Restaurant_.name = '';
+      Restaurant_.image = new Media();
+      Restaurant_.rate = '0';
+      Restaurant_.deliveryFee = 0.0;
+      Restaurant_.adminCommission = 0.0;
+      Restaurant_.deliveryRange = 0.0;
+      Restaurant_.address = '';
+      Restaurant_.description = '';
+      Restaurant_.phone = '';
+      Restaurant_.mobile = '';
+      Restaurant_.defaultTax = 0.0;
+      Restaurant_.information = '';
+      Restaurant_.latitude = '0';
+      Restaurant_.longitude = '0';
+      Restaurant_.closed = false;
+      Restaurant_.availableForDelivery = false;
+      Restaurant_.distance = 0.0;
+    }
 
     return Restaurant_;
   }

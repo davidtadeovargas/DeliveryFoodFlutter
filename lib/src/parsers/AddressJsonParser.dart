@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Address.dart';
 
 import 'IBaseParser.dart';
@@ -10,12 +11,18 @@ class AddressJsonParser implements IBaseParser {
 
     Address Address_ = new Address();
 
-    Address_.id = jsonMap['id'].toString();
-    Address_.description = jsonMap['description'] != null ? jsonMap['description'].toString() : null;
-    Address_.address = jsonMap['address'] != null ? jsonMap['address'] : null;
-    Address_.latitude = jsonMap['latitude'] != null ? jsonMap['latitude'].toDouble() : null;
-    Address_.longitude = jsonMap['longitude'] != null ? jsonMap['longitude'].toDouble() : null;
-    Address_.isDefault = jsonMap['is_default'] ?? false;
+    try{
+
+      Address_.id = jsonMap['id'].toString();
+      Address_.description = jsonMap['description'] != null ? jsonMap['description'].toString() : null;
+      Address_.address = jsonMap['address'] != null ? jsonMap['address'] : null;
+      Address_.latitude = jsonMap['latitude'] != null ? jsonMap['latitude'].toDouble() : null;
+      Address_.longitude = jsonMap['longitude'] != null ? jsonMap['longitude'].toDouble() : null;
+      Address_.isDefault = jsonMap['is_default'] ?? false;
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return Address_;
   }

@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Notification.dart';
 
 import 'IBaseParser.dart';
@@ -10,11 +11,17 @@ class NotificationJsonParser implements IBaseParser {
 
     Notification Notification_ = new Notification();
 
-    Notification_.id = jsonMap['id'].toString();
-    Notification_.type = jsonMap['type'] != null ? jsonMap['type'].toString() : '';
-    Notification_.data = jsonMap['data'] != null ? {} : {};
-    Notification_.read = jsonMap['read_at'] != null ? true : false;
-    Notification_.createdAt = DateTime.parse(jsonMap['created_at']);
+    try{
+
+      Notification_.id = jsonMap['id'].toString();
+      Notification_.type = jsonMap['type'] != null ? jsonMap['type'].toString() : '';
+      Notification_.data = jsonMap['data'] != null ? {} : {};
+      Notification_.read = jsonMap['read_at'] != null ? true : false;
+      Notification_.createdAt = DateTime.parse(jsonMap['created_at']);
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return Notification_;
   }

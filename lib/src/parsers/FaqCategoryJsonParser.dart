@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Faq.dart';
 import 'package:food_delivery_app/src/models/FaqCategory.dart';
 
@@ -12,9 +13,15 @@ class FaqCategoryJsonParser implements IBaseParser {
     FaqCategoryJsonParser FaqCategoryJsonParser_ = FaqCategoryJsonParser();
     FaqCategory FaqCategory_ = new FaqCategory();
 
-    FaqCategory_.id = jsonMap['id'].toString();
-    FaqCategory_.name = jsonMap['faqs'] != null ? jsonMap['name'].toString() : '';
-    FaqCategory_.faqs = jsonMap['faqs'] != null ? List.from(jsonMap['faqs']).map((element) => FaqCategoryJsonParser_.fromJsonToModel(element) as Faq).toList() : [];
+    try{
+
+      FaqCategory_.id = jsonMap['id'].toString();
+      FaqCategory_.name = jsonMap['faqs'] != null ? jsonMap['name'].toString() : '';
+      FaqCategory_.faqs = jsonMap['faqs'] != null ? List.from(jsonMap['faqs']).map((element) => FaqCategoryJsonParser_.fromJsonToModel(element) as Faq).toList() : [];
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return FaqCategory_;
   }

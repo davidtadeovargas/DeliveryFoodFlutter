@@ -1,3 +1,4 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/OrderStatus.dart';
 
 import 'IBaseParser.dart';
@@ -10,8 +11,14 @@ class OrderStatusJsonParser implements IBaseParser {
 
     OrderStatus OrderStatus_ = new OrderStatus();
 
-    OrderStatus_.id = jsonMap['id'].toString();
-    OrderStatus_.status = jsonMap['status'] != null ? jsonMap['status'] : '';
+    try{
+
+      OrderStatus_.id = jsonMap['id'].toString();
+      OrderStatus_.status = jsonMap['status'] != null ? jsonMap['status'] : '';
+
+    }catch(e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
 
     return OrderStatus_;
   }

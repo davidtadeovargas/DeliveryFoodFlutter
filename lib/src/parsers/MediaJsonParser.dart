@@ -1,4 +1,6 @@
+import 'package:food_delivery_app/src/helpers/custom_trace.dart';
 import 'package:food_delivery_app/src/models/Media.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 import 'IBaseParser.dart';
 
@@ -10,12 +12,23 @@ class MediaJsonParser implements IBaseParser {
 
     Media Media_ = new Media();
 
-    Media_.id = jsonMap['id'].toString();
-    Media_.name = jsonMap['name'];
-    Media_.url = jsonMap['url'];
-    Media_.thumb = jsonMap['thumb'];
-    Media_.icon = jsonMap['icon'];
-    Media_.size = jsonMap['formated_size'];
+    try{
+
+      Media_.id = jsonMap['id'].toString();
+      Media_.name = jsonMap['name'];
+      Media_.url = jsonMap['url'];
+      Media_.thumb = jsonMap['thumb'];
+      Media_.icon = jsonMap['icon'];
+      Media_.size = jsonMap['formated_size'];
+
+    }catch(e){
+
+      print(CustomTrace(StackTrace.current, message: e));
+
+      Media_.url = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
+      Media_.thumb = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
+      Media_.icon = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
+    }
 
     return Media_;
   }
