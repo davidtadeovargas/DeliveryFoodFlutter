@@ -23,10 +23,6 @@ class FoodController extends ControllerMVC {
   int extraCount = 1;
   FoodRepository FoodRepository_ = RepositoryManager.FoodRepository_;
   CartRepository CartRepository_ = RepositoryManager.CartRepository_;
-  bool firstRadiobuttonSelected = true;
-  Extra ExtraPrevious = null;
-
-  String radioButtonGroupValue = null;
 
   AnimationController previousAnimationController;
   Extra extra;

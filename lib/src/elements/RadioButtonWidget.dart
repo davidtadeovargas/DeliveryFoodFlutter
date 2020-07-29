@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/src/controllers/FoodController.dart';
 
@@ -11,6 +13,9 @@ class RadioButtonWidget extends StatefulWidget {
   final bool showPrice;
   final FoodController FoodController_;
   int extraIndex;
+  final HashMap radioButtonsGroupValues;
+  Extra ExtraPrevious;
+  final HashMap radioButtonsExtraPrevValues;
 
   RadioButtonWidget({
     Key key,
@@ -18,7 +23,10 @@ class RadioButtonWidget extends StatefulWidget {
     this.onChanged,
     this.showPrice,
     this.FoodController_,
-    this.extraIndex
+    this.extraIndex,
+    this.radioButtonsGroupValues,
+    this.ExtraPrevious,
+    this.radioButtonsExtraPrevValues
   }) : super(key: key);
 
   @override
@@ -27,36 +35,19 @@ class RadioButtonWidget extends StatefulWidget {
 
 class _RadioButtonWidgetState extends State<RadioButtonWidget> with SingleTickerProviderStateMixin {
 
+  Extra extraMutable;
+
   @override
   void initState() {
     super.initState();
+
+    extraMutable = widget.extra;
 
     WidgetsBinding.instance.addPostFrameCallback((_) => onBuildComplete(context));
   }
 
   void onBuildComplete(BuildContext BuildContext_){
     widget.FoodController_.calculateTotal();
-  }
-
-  void changedRadioButton(Extra Extra_){
-
-    if (Extra_.checked) {
-      Extra_.checked = false;
-    } else {
-      Extra_.checked = true;
-
-      //The previous extra model is not checked anymore
-      if(widget.FoodController_.ExtraPrevious!=null){
-        widget.FoodController_.ExtraPrevious.checked = false;
-      }
-
-      //Save the previous extra model
-      widget.FoodController_.ExtraPrevious = Extra_;
-    }
-
-    widget.FoodController_.radioButtonGroupValue = Extra_.id;
-
-    widget.onChanged();
   }
 
   @override
@@ -70,13 +61,35 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> with SingleTicker
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Radio(
-              value: widget.extra.id,
-              groupValue: widget.FoodController_.radioButtonGroupValue,
-              onChanged: (Object extraIndex) {
+              value: extraMutable.id,
+              groupValue: widget.radioButtonsGroupValues[extraMutable.extraGroupId],
+              onChanged: (Object extraid) {
 
                 Extra Extra_ = widget.FoodController_.food.extras.where((extra) => extra.extraGroupId == widget.extra.extraGroupId).elementAt(widget.extraIndex);
 
-                changedRadioButton(Extra_);
+                setState(() {
+
+                  if (Extra_.checked) {
+                    Extra_.checked = false;
+                  } else {
+                    Extra_.checked = true;
+
+                    Extra ExtraPrevious = widget.radioButtonsExtraPrevValues[widget.extra.extraGroupId];
+
+                    //The previous extra model is not checked anymore
+                    if(ExtraPrevious!=null){
+                      ExtraPrevious.checked = false;
+                    }
+
+                    //Save the previous extra model
+                    widget.radioButtonsExtraPrevValues[widget.extra.extraGroupId] = Extra_;
+                  }
+
+                  widget.radioButtonsGroupValues[extraMutable.extraGroupId] = extraid;
+
+                  });
+
+                widget.onChanged();
               }
           ),
           SizedBox(width: 15),

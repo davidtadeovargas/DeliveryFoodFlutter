@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +19,10 @@ import '../models/RouteArgument.dart';
 
 import 'package:food_delivery_app/src/repository/RepositoryManager.dart';
 import '../repository/UserRepository.dart';
-import 'buttons.dart';
 
 // ignore: must_be_immutable
 class FoodWidget extends StatefulWidget {
   RouteArgument routeArgument;
-
-  bool pepinillos = true;
-  bool aceitunas = false;
 
   FoodWidget({Key key, this.routeArgument}) : super(key: key);
 
@@ -38,6 +36,8 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
 
   FoodController _con;
   UserRepository UserRepository_ = RepositoryManager.UserRepository_;
+  HashMap radioButtonsGroupValues;
+  HashMap radioButtonsExtraPrevValues;
 
   _FoodWidgetState() : super(FoodController()) {
     _con = controller;
@@ -45,9 +45,13 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
 
   @override
   void initState() {
+
     _con.listenForFood(foodId: widget.routeArgument.id);
     _con.listenForCart();
     _con.listenForFavorite(foodId: widget.routeArgument.id);
+
+    radioButtonsGroupValues = HashMap<String, String>();
+    radioButtonsExtraPrevValues = HashMap<String, Extra>();
 
     super.initState();
   }
@@ -202,9 +206,11 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                         itemBuilder: (context, extraGroupIndex) {
 
                                           var extraGroup = _con.food.extraGroups.elementAt(extraGroupIndex);
+                                          Extra ExtraPrevious = null;
 
                                           //If the group is base so
                                           if(extraGroup.forzed){
+
                                             return Wrap(
                                               children: <Widget>[
                                                 ListTile(
@@ -225,14 +231,11 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
 
                                                     Extra Extra_ = _con.food.extras.where((extra) => extra.extraGroupId == extraGroup.id).elementAt(extraIndex);
 
-                                                    //Select just the first radiobutton item
-                                                    if(_con.radioButtonGroupValue==null){
-                                                      _con.radioButtonGroupValue = Extra_.id;
+                                                    //Init radio button states
+                                                    if(!radioButtonsGroupValues.containsKey(extraGroup.id)){
+                                                      radioButtonsGroupValues[extraGroup.id] = Extra_.id;
                                                       Extra_.checked = true;
-                                                      _con.ExtraPrevious = Extra_;
-
-                                                      _con.food?.extras?.forEach((extra) {
-                                                      });
+                                                      radioButtonsExtraPrevValues[extraGroup.id] = Extra_;
                                                     }
 
                                                     return RadioButtonWidget(
@@ -241,6 +244,9 @@ class _FoodWidgetState extends StateMVC<FoodWidget> {
                                                       showPrice: true,
                                                       FoodController_: _con,
                                                       extraIndex: extraIndex,
+                                                      ExtraPrevious:ExtraPrevious,
+                                                      radioButtonsGroupValues:radioButtonsGroupValues,
+                                                      radioButtonsExtraPrevValues:radioButtonsExtraPrevValues,
                                                     );
                                                   },
                                                   separatorBuilder: (context, index) {
